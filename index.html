@@ -240,6 +240,13 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 @keyframes spin{to{transform:rotate(360deg)}}
 .load-text{font-family:var(--mono);font-size:12px;color:var(--text3);letter-spacing:.12em}
 #loading-sub{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:.08em;opacity:.6}
+
+.light-mode{
+ --bg:#f5f7fb;--bg2:#ffffff;--bg3:#eef3f8;--bg4:#dde7f2;
+ --border:#d5dde7;--border2:#c7d1dc;
+ --text:#111827;--text2:#374151;--text3:#6b7280;
+}
+
 </style>
 </head>
 <body>
@@ -250,6 +257,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   <div class="load-spinner"></div>
   <div class="load-text">KOLKATA SITUATION MONITOR</div>
   <div id="loading-sub">Connecting to live feeds…</div>
+</div>
+
+
+<div id="intel-ticker" style="height:28px;background:#071018;border-bottom:1px solid #1e2d3d;display:flex;align-items:center;overflow:hidden;font-family:'Space Mono',monospace;font-size:11px;">
+<div style="padding:0 12px;color:#00d4aa;font-weight:bold;">INTEL</div>
+<marquee scrollamount="5">Kolkata Operations Monitor Active • Weather Feed Online • AQI Monitoring Active • Metro Status Tracking Active • Intelligence Feed Connected • Live Dashboard Operational</marquee>
 </div>
 
 <div id="topbar">
@@ -707,7 +720,11 @@ async function init(){
   setInterval(async()=>{const n=await fetchNews();renderNews(n);},10*60*1000);
 }
 
-function toggleTheme(){}// placeholder
+
+function toggleTheme(){
+ document.body.classList.toggle('light-mode');
+}
+
 
 window.addEventListener('DOMContentLoaded',init);
 </script>
