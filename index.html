@@ -241,18 +241,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .load-text{font-family:var(--mono);font-size:12px;color:var(--text3);letter-spacing:.12em}
 #loading-sub{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:.08em;opacity:.6}
 </style>
-
-<style>
-#ops-rail{position:fixed;left:0;top:52px;width:52px;height:calc(100vh - 52px);background:#08111d;border-right:1px solid #1e2d3d;z-index:150;display:flex;flex-direction:column;align-items:center;padding-top:10px;gap:10px}
-.ops-dot{width:14px;height:14px;border-radius:50%;background:#00d4aa;opacity:.9}
-#layout{margin-left:52px}
-#intel-bar{height:36px;background:#08111d;border-bottom:1px solid #1e2d3d;display:flex;align-items:center;padding:0 12px;gap:12px;font-family:Space Mono,monospace;font-size:11px}
-.metric-card{padding:4px 10px;border:1px solid #263347;border-radius:6px;color:#00d4aa}
-#region-bar{display:flex;gap:8px;padding:8px 12px;background:#0b1422;border-bottom:1px solid #1e2d3d;overflow:auto}
-.region-btn{padding:4px 10px;border:1px solid #263347;border-radius:20px;cursor:pointer;font-size:11px}
-#breaking-ribbon{position:fixed;bottom:0;left:52px;right:0;height:54px;background:#5d0d12;color:#fff;display:flex;align-items:center;padding:0 16px;z-index:200}
-</style>
-
 </head>
 <body>
 
@@ -285,32 +273,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <button class="topbar-btn" id="refresh-btn" onclick="refreshAll()">↺ REFRESH</button>
     <button class="topbar-btn" style="color:var(--accent);border-color:var(--accent)">SIGN IN</button>
   </div>
-</div>
-
-
-<div id="ops-rail">
-<div class="ops-dot"></div><div class="ops-dot" style="background:#f59e0b"></div>
-<div class="ops-dot" style="background:#ef4444"></div><div class="ops-dot" style="background:#8b5cf6"></div>
-<div class="ops-dot" style="background:#06b6d4"></div><div class="ops-dot" style="background:#22c55e"></div>
-</div>
-
-<div id="intel-bar">
-<div class="metric-card">THREAT LOW</div>
-<div class="metric-card">SENSORS 72</div>
-<div class="metric-card">FEEDS ONLINE</div>
-<div class="metric-card">LATENCY 1.2s</div>
-<div class="metric-card">COVERAGE 98%</div>
-</div>
-
-<div id="region-bar">
-<div class="region-btn">CENTRAL</div>
-<div class="region-btn">NORTH</div>
-<div class="region-btn">SOUTH</div>
-<div class="region-btn">EAST</div>
-<div class="region-btn">WEST</div>
-<div class="region-btn">HOWRAH</div>
-<div class="region-btn">SALT LAKE</div>
-<div class="region-btn">NEW TOWN</div>
 </div>
 
 <div id="layout">
@@ -802,17 +764,6 @@ document.addEventListener('click',e=>{
 });
 </script>
 
-
-<div id="breaking-ribbon">
-<b>BREAKING</b>&nbsp;&nbsp; Kolkata Operations Center Active • AQI Monitoring Online • Metro Network Tracking Enabled • Weather Feed Connected
-</div>
-<script>
-document.querySelectorAll('.region-btn').forEach(btn=>{
- btn.onclick=()=>{
-   if(typeof mapInst!=='undefined') mapInst.setView([22.5726,88.3639],12,{animate:true});
- };
-});
-</script>
+<script src="KSM_V3_CommandCenter.js"></script>
 </body>
-
 </html>
