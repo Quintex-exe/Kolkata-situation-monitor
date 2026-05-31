@@ -711,5 +711,58 @@ function toggleTheme(){}// placeholder
 
 window.addEventListener('DOMContentLoaded',init);
 </script>
+
+<script>
+// --- Functional button patch ---
+window.activeFilters = new Set(['incidents','metro','aq','temp']);
+
+function toggleTheme(){
+  document.body.classList.toggle('light-mode');
+}
+
+function toggleFilter(id){
+  const el=document.getElementById('f-'+id);
+  if(el) el.classList.toggle('active');
+
+  if(activeFilters.has(id)) activeFilters.delete(id);
+  else activeFilters.add(id);
+
+  if(id==='temp'){
+    weatherMarkers.forEach(m=>{
+      if(mapInst.hasLayer(m) && !activeFilters.has('temp')) mapInst.removeLayer(m);
+      else if(!mapInst.hasLayer(m) && activeFilters.has('temp')) m.addTo(mapInst);
+    });
+  }
+
+  if(id==='aq'){
+    aqMarkers.forEach(m=>{
+      if(mapInst.hasLayer(m) && !activeFilters.has('aq')) mapInst.removeLayer(m);
+      else if(!mapInst.hasLayer(m) && activeFilters.has('aq')) m.addTo(mapInst);
+    });
+  }
+
+  if(id==='metro'){
+    metroMarkers.forEach(m=>{
+      if(mapInst.hasLayer(m) && !activeFilters.has('metro')) mapInst.removeLayer(m);
+      else if(!mapInst.hasLayer(m) && activeFilters.has('metro')) m.addTo(mapInst);
+    });
+  }
+}
+
+document.addEventListener('click',e=>{
+  if(e.target.closest('.metro-line')){
+    mapInst.setView([22.5726,88.3639],14,{animate:true});
+  }
+
+  if(e.target.closest('.show-more')){
+    switchView('feed');
+  }
+
+  if(e.target.closest('.more-btn')){
+    alert('Additional layers can be connected here.');
+  }
+});
+</script>
+
 </body>
 </html>
