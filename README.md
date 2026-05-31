@@ -1,3 +1,50 @@
+### Short Description
+
+**Kolkata Situation Monitor (KSM)** is a real-time operational intelligence dashboard designed to provide live situational awareness across Kolkata. It combines weather monitoring, air quality tracking, metro network status, incident reporting, and city intelligence feeds into a single interactive command-center interface. Built with HTML, CSS, JavaScript, and Leaflet.js, KSM offers an intuitive map-based experience for monitoring urban conditions, transportation networks, environmental factors, and emerging events in real time.
+
+---
+
+### GitHub Repository Description
+
+**Real-time Kolkata operations dashboard featuring live weather, AQI monitoring, metro status tracking, incident alerts, intelligence feeds, and interactive mapping powered by Leaflet.js and Open-Meteo APIs.**
+
+---
+
+### Detailed Project Description
+
+Kolkata Situation Monitor (KSM) is a modern operational dashboard built to centralize critical city information into a single monitoring platform. The application visualizes live environmental data, transportation status, and operational alerts through an interactive dark-themed interface inspired by professional command-and-control systems.
+
+The dashboard integrates weather forecasts, air quality measurements, metro network status indicators, incident monitoring, and intelligence feeds while providing an interactive map for geographic awareness. Users can switch between map and feed views, filter operational layers, monitor key city metrics, and track developing situations across Kolkata in real time.
+
+Designed as a lightweight single-page application, KSM requires no backend infrastructure and leverages public APIs to deliver a responsive monitoring experience suitable for demonstrations, smart city projects, urban analytics, emergency management concepts, and operational intelligence systems.
+
+**Key Highlights:**
+
+* Real-time weather and AQI monitoring
+* Interactive city map with live overlays
+* Metro network status tracking
+* Incident and alert management
+* Operational intelligence feed
+* Dark command-center UI
+* Lightweight, backend-free architecture
+* Mobile and desktop compatible
+* Easily extendable with additional APIs and data sources
+
+**Use Cases:**
+
+* Smart City Dashboards
+* Urban Operations Centers
+* Public Transport Monitoring
+* Environmental Monitoring
+* Emergency Response Visualization
+* GIS and Mapping Projects
+* Web Development Portfolio Projects
+* Civic Technology Demonstrations
+
+**Version:** 1.0
+**Platform:** Web Application
+**Technology:** HTML5, CSS3, JavaScript, Leaflet.js, Open-Meteo APIs, OpenStreetMap Data.
+
 ````md
 # Kolkata Situation Monitor (KSM)
 
