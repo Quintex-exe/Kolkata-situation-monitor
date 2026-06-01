@@ -79,27 +79,295 @@ document.addEventListener("click",(e)=>{
   }
 });
 
-async function refreshAll(){
-  if(typeof fetchWeather!=="function" || typeof fetchAQ!=="function") return;
+// ===============================
+// REALTIME CONFIG
+// ===============================
 
-  document.getElementById("conn-status").textContent="UPDATING";
+const REFRESH_INTERVAL = 60 * 1000;     // 1 min
+const NEWS_INTERVAL = 5 * 60 * 1000;    // 5 min
+const SUMMARY_INTERVAL = 15 * 60 * 1000;
+
+// ===============================
+// API HELPERS
+// ===============================
+
+async function api(endpoint){
+
+  const res = await fetch(endpoint,{
+    cache:"no-store"
+  });
+
+  if(!res.ok){
+    throw new Error(`${endpoint} failed`);
+  }
+
+  return await res.json();
+}
+
+// ===============================
+// REALTIME DATA FETCHERS
+// ===============================
+
+async function fetchWeatherLive(){
+  return api("/api/weather");
+}
+
+async function fetchAQLive(){
+  return api("/api/aq");
+}
+
+async function fetchNewsLive(){
+  return api("/api/news");
+}
+
+async function fetchIntelLive(){
+  return api("/api/intel");
+}
+
+async function fetchSummaryLive(){
+  return api("/api/summary");
+}
+
+async function fetchSystemLive(){
+  return api("/api/system");
+}
+
+// ===============================
+// THREAT LEVEL
+// ===============================
+
+function calculateThreat(aq, incidents){
+
+  let score = 0;
+
+  if(aq?.current?.us_aqi > 150){
+    score += 4;
+  }
+  else if(aq?.current?.us_aqi > 100){
+    score += 2;
+  }
+
+  score += Math.min(incidents.length,5);
+
+  if(score >= 8) return "CRITICAL";
+  if(score >= 5) return "HIGH";
+  if(score >= 3) return "MEDIUM";
+
+  return "LOW";
+}
+
+// ===============================
+// REFRESH EVERYTHING
+// ===============================
+
+async function refreshAll(){
 
   try{
-    const [weather,aq]=await Promise.all([fetchWeather(),fetchAQ()]);
 
-    if(window.renderWeather) renderWeather(weather,aq);
-    if(window.addWeatherMarkers) addWeatherMarkers(weather);
-    if(window.fetchIncidents && window.renderIncidents){
-      const incidents=await fetchIncidents(aq,weather);
-      renderIncidents(incidents);
+    document.getElementById("conn-status").textContent =
+      "SYNCING";
+
+    const [
+      weather,
+      aq,
+      intel
+    ] = await Promise.all([
+      fetchWeatherLive(),
+      fetchAQLive(),
+      fetchIntelLive()
+    ]);
+
+    lastWeatherData = weather;
+    lastAQData = aq;
+
+    if(window.renderWeather){
+      renderWeather(weather,aq);
     }
 
-    document.getElementById("conn-status").textContent="CONNECTED";
-    document.getElementById("updated").textContent="Updated just now";
-  }catch(err){
+    if(window.addWeatherMarkers){
+      addWeatherMarkers(weather);
+    }
+
+    if(window.addAQMarkers){
+      addAQMarkers(aq);
+    }
+
+    if(window.fetchIncidents){
+
+      const incidents =
+        await fetchIncidents(aq,weather);
+
+      lastIncidents = incidents;
+
+      if(window.renderIncidents){
+        renderIncidents(incidents);
+      }
+
+      if(window.addIncidentMapMarkers){
+        addIncidentMapMarkers();
+      }
+    }
+
+    const threat =
+      calculateThreat(
+        aq,
+        lastIncidents
+      );
+
+    const threatEl =
+      document.getElementById("threat-level");
+
+    if(threatEl){
+      threatEl.textContent = threat;
+    }
+
+    document.getElementById("conn-status")
+      .textContent = "ONLINE";
+
+    document.getElementById("updated")
+      .textContent =
+      "Updated " +
+      new Date().toLocaleTimeString();
+
+  }
+  catch(err){
+
     console.error(err);
-    document.getElementById("conn-status").textContent="ERROR";
+
+    document.getElementById("conn-status")
+      .textContent =
+      "OFFLINE";
   }
 }
 
-console.log("KSM V3 Command Center JS Loaded");
+// ===============================
+// NEWS REFRESH
+// ===============================
+
+async function refreshNews(){
+
+  try{
+
+    const news =
+      await fetchNewsLive();
+
+    if(window.renderNews){
+      renderNews(news);
+    }
+
+  }catch(err){
+
+    console.error(err);
+  }
+}
+
+// ===============================
+// AI SUMMARY
+// ===============================
+
+async function refreshSummary(){
+
+  try{
+
+    const summary =
+      await fetchSummaryLive();
+
+    const el =
+      document.getElementById(
+        "ai-summary"
+      );
+
+    if(el){
+      el.innerHTML =
+        summary.summary;
+    }
+
+  }catch(err){
+
+    console.error(err);
+  }
+}
+
+// ===============================
+// SYSTEM STATUS
+// ===============================
+
+async function refreshSystem(){
+
+  try{
+
+    const sys =
+      await fetchSystemLive();
+
+    const conn =
+      document.getElementById(
+        "conn-status"
+      );
+
+    if(conn){
+      conn.textContent =
+        sys.status || "ONLINE";
+    }
+
+  }catch(err){
+
+    console.error(err);
+  }
+}
+
+// ===============================
+// LIVE CLOCK
+// ===============================
+
+setInterval(()=>{
+
+  const clock =
+    document.getElementById(
+      "clock"
+    );
+
+  if(clock){
+
+    clock.textContent =
+      new Date()
+      .toLocaleTimeString(
+        "en-IN",
+        {
+          hour12:false
+        }
+      );
+  }
+
+},1000);
+
+// ===============================
+// AUTO REFRESH
+// ===============================
+
+refreshAll();
+refreshNews();
+refreshSummary();
+
+setInterval(
+  refreshAll,
+  REFRESH_INTERVAL
+);
+
+setInterval(
+  refreshNews,
+  NEWS_INTERVAL
+);
+
+setInterval(
+  refreshSummary,
+  SUMMARY_INTERVAL
+);
+
+setInterval(
+  refreshSystem,
+  30000
+);
+
+console.log(
+  "KSM REALTIME ENGINE ONLINE"
+);
