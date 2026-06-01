@@ -6,7 +6,9 @@ window.KSM_CONFIG = {
   // Leave empty for same-origin deployment
   // Example:
   // API_BASE: "https://your-backend.vercel.app"
-  API_BASE: "",
+  API_BASE:
+    "https://kolkata-situation-monitor.onrender.com"
+ },
 
   REFRESH: {
     WEATHER: 60000,      // 1 minute
