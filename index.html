@@ -11,192 +11,154 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0a0d12;
-  --bg2:#0f1319;
-  --bg3:#151b24;
-  --bg4:#1c2535;
-  --border:#1e2d3d;
-  --border2:#263347;
-  --text:#d4dce8;
-  --text2:#7a8fa8;
-  --text3:#3d5166;
-  --accent:#00d4aa;
-  --accent2:#0099ff;
-  --warn:#f59e0b;
-  --danger:#ef4444;
-  --good:#22c55e;
-  --mono:'Space Mono',monospace;
-  --sans:'DM Sans',sans-serif;
+  --bg:#0a0d12;--bg2:#0f1319;--bg3:#151b24;--bg4:#1c2535;
+  --border:#1e2d3d;--border2:#263347;
+  --text:#d4dce8;--text2:#7a8fa8;--text3:#3d5166;
+  --accent:#00d4aa;--accent2:#0099ff;
+  --warn:#f59e0b;--danger:#ef4444;--good:#22c55e;
+  --mono:'Space Mono',monospace;--sans:'DM Sans',sans-serif;
 }
-html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--sans)}
+body.light-mode{
+  --bg:#f0f4f8;--bg2:#ffffff;--bg3:#e8edf2;--bg4:#dce3ea;
+  --border:#c8d3dc;--border2:#b0bec8;
+  --text:#1a2535;--text2:#4a6278;--text3:#8a9fb5;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--sans);transition:background .3s,color .3s}
 
 /* ── TOPBAR ── */
-#topbar{
-  height:52px;display:flex;align-items:center;justify-content:space-between;
-  padding:0 18px;background:var(--bg2);
-  border-bottom:1px solid var(--border);
-  position:relative;z-index:200;flex-shrink:0;
-}
-#topbar-brand{display:flex;align-items:center;gap:10px}
-.brand-icon{width:32px;height:32px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center}
+#topbar{height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:var(--bg2);border-bottom:1px solid var(--border);position:relative;z-index:200;flex-shrink:0;transition:background .3s}
+#topbar-brand{display:flex;align-items:center;gap:10px;cursor:pointer}
+#topbar-brand:hover .brand-icon{border-color:var(--accent2);box-shadow:0 0 8px rgba(0,153,255,.3)}
+.brand-icon{width:32px;height:32px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .brand-icon svg{width:18px;height:18px;stroke:var(--accent);fill:none;stroke-width:2}
-.brand-text h1{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.12em;color:#fff;line-height:1.1}
+.brand-text h1{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.12em;color:var(--text);line-height:1.1}
 .brand-text p{font-size:10px;color:var(--text3);letter-spacing:.15em;font-family:var(--mono)}
 #topbar-center{display:flex;align-items:center;gap:20px}
-.live-badge{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--good)}
+.live-badge{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--good);cursor:pointer;padding:4px 8px;border-radius:4px;transition:background .15s}
+.live-badge:hover{background:rgba(34,197,94,.1)}
 .live-dot{width:8px;height:8px;border-radius:50%;background:var(--good);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(34,197,94,.4)}50%{opacity:.8;box-shadow:0 0 0 4px rgba(34,197,94,0)}}
-#clock{font-family:var(--mono);font-size:18px;font-weight:700;color:#fff;letter-spacing:.06em}
-.conn-badge{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10px;color:var(--accent2);letter-spacing:.06em}
+#clock{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--text);letter-spacing:.06em;cursor:pointer;padding:2px 6px;border-radius:4px;transition:background .15s}
+#clock:hover{background:var(--bg3)}
+.conn-badge{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10px;color:var(--accent2);letter-spacing:.06em;cursor:pointer;padding:3px 7px;border-radius:4px;transition:background .15s}
+.conn-badge:hover{background:rgba(0,153,255,.1)}
 .conn-dot{width:6px;height:6px;border-radius:50%;background:var(--accent2)}
 #topbar-right{display:flex;align-items:center;gap:18px;font-size:12px;color:var(--text2)}
 .topbar-btn{background:none;border:1px solid var(--border2);border-radius:5px;color:var(--text2);padding:5px 10px;cursor:pointer;font-family:var(--mono);font-size:10px;letter-spacing:.08em;transition:all .15s}
 .topbar-btn:hover{border-color:var(--accent);color:var(--accent)}
-#updated{font-size:10px;color:var(--text3);font-family:var(--mono)}
+#updated{font-size:10px;color:var(--text3);font-family:var(--mono);cursor:pointer}
+#updated:hover{color:var(--text2)}
 
 /* ── LAYOUT ── */
 #layout{display:flex;height:calc(100vh - 52px);overflow:hidden}
 
 /* ── LEFT PANEL ── */
-#left-panel{
-  width:248px;flex-shrink:0;
-  background:var(--bg2);
-  border-right:1px solid var(--border);
-  display:flex;flex-direction:column;overflow:hidden;
-}
-#left-header{
-  padding:12px 14px;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-}
-.panel-title{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--text);display:flex;align-items:center;gap:6px}
-.panel-title svg{width:14px;height:14px;stroke:var(--accent);fill:none;stroke-width:2}
+#left-panel{width:248px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;transition:background .3s}
+#left-header{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.panel-title{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--text);display:flex;align-items:center;gap:6px;cursor:pointer}
+.panel-title:hover{color:var(--accent)}
+.panel-title svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
 .left-stats{display:flex;gap:12px;font-size:11px}
-.stat-ok{color:var(--good);font-family:var(--mono);font-size:11px}
-.stat-warn{color:var(--warn);font-family:var(--mono);font-size:11px}
+.stat-ok{color:var(--good);font-family:var(--mono);font-size:11px;cursor:pointer}
+.stat-ok:hover{text-decoration:underline}
+.stat-warn{color:var(--warn);font-family:var(--mono);font-size:11px;cursor:pointer}
+.stat-warn:hover{text-decoration:underline}
 #metro-list{flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
-.metro-line{
-  display:flex;align-items:center;padding:9px 14px;
-  border-bottom:1px solid var(--border);cursor:pointer;
-  transition:background .12s;gap:10px;
-}
+.metro-line{display:flex;align-items:center;padding:9px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .12s;gap:10px}
 .metro-line:hover{background:var(--bg3)}
+.metro-line.selected{background:var(--bg4);border-left:2px solid var(--accent)}
 .line-color-bar{width:3px;height:28px;border-radius:2px;flex-shrink:0}
 .line-name{flex:1;font-size:12px;font-weight:500;color:var(--text)}
-.line-badge{
-  font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.06em;
-  padding:3px 7px;border-radius:3px;
-}
+.line-badge{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.06em;padding:3px 7px;border-radius:3px}
 .badge-good{background:rgba(34,197,94,.15);color:var(--good);border:1px solid rgba(34,197,94,.3)}
 .badge-warn{background:rgba(245,158,11,.15);color:var(--warn);border:1px solid rgba(245,158,11,.3)}
 .badge-severe{background:rgba(239,68,68,.15);color:var(--danger);border:1px solid rgba(239,68,68,.3)}
 .badge-planned{background:rgba(0,153,255,.15);color:var(--accent2);border:1px solid rgba(0,153,255,.3)}
-.line-arrow{color:var(--text3);font-size:10px}
+.line-arrow{color:var(--text3);font-size:10px;transition:transform .15s}
+.metro-line:hover .line-arrow{transform:translateX(3px);color:var(--accent)}
+#left-footer{padding:8px 14px;border-top:1px solid var(--border);flex-shrink:0}
+.left-footer-btn{width:100%;font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--text3);background:none;border:1px solid var(--border);border-radius:4px;padding:6px;cursor:pointer;transition:all .15s}
+.left-footer-btn:hover{border-color:var(--accent);color:var(--accent)}
 
-/* ── CENTER MAP ── */
+/* ── CENTER ── */
 #center{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative}
-#map-toolbar{
-  display:flex;align-items:center;gap:0;padding:0 16px;height:44px;
-  background:var(--bg2);border-bottom:1px solid var(--border);
-  flex-shrink:0;
-}
-.view-btn{
-  display:flex;align-items:center;gap:6px;padding:6px 14px;
-  font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.1em;
-  color:var(--text2);cursor:pointer;background:none;border:none;
-  border-bottom:2px solid transparent;transition:all .15s;position:relative;top:1px;
-}
+#map-toolbar{display:flex;align-items:center;gap:0;padding:0 16px;height:44px;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0;transition:background .3s;position:relative}
+.view-btn{display:flex;align-items:center;gap:6px;padding:6px 14px;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--text2);cursor:pointer;background:none;border:none;border-bottom:2px solid transparent;transition:all .15s;position:relative;top:1px}
 .view-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
 .view-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2}
-#alert-count{
-  background:var(--danger);color:#fff;border-radius:50%;
-  width:16px;height:16px;font-size:9px;font-weight:700;font-family:var(--mono);
-  display:inline-flex;align-items:center;justify-content:center;
-}
-#filter-bar{
-  display:flex;align-items:center;gap:8px;padding:8px 16px;
-  background:var(--bg2);border-bottom:1px solid var(--border);
-  flex-shrink:0;overflow-x:auto;scrollbar-width:none;
-}
+#alert-count{background:var(--danger);color:#fff;border-radius:50%;width:16px;height:16px;font-size:9px;font-weight:700;font-family:var(--mono);display:inline-flex;align-items:center;justify-content:center}
+#filter-bar{display:flex;align-items:center;gap:8px;padding:8px 16px;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0;overflow-x:auto;scrollbar-width:none;transition:background .3s}
 #filter-bar::-webkit-scrollbar{display:none}
 .filter-label{font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--text3);flex-shrink:0}
-.filter-chip{
-  display:flex;align-items:center;gap:5px;padding:4px 10px;
-  border-radius:20px;font-size:10px;font-weight:500;cursor:pointer;
-  border:1px solid var(--border2);color:var(--text2);background:var(--bg3);
-  transition:all .15s;flex-shrink:0;font-family:var(--mono);letter-spacing:.04em;
-}
+.filter-chip{display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:500;cursor:pointer;border:1px solid var(--border2);color:var(--text2);background:var(--bg3);transition:all .15s;flex-shrink:0;font-family:var(--mono);letter-spacing:.04em;user-select:none}
 .filter-chip.active{background:rgba(0,212,170,.1);border-color:var(--accent);color:var(--accent)}
+.filter-chip:hover{border-color:var(--accent2);color:var(--accent2)}
 .filter-chip svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2}
-.more-btn{font-family:var(--mono);font-size:10px;color:var(--text3);background:none;border:1px solid var(--border);border-radius:20px;padding:4px 10px;cursor:pointer;flex-shrink:0}
+.more-btn{font-family:var(--mono);font-size:10px;color:var(--text3);background:none;border:1px solid var(--border);border-radius:20px;padding:4px 10px;cursor:pointer;flex-shrink:0;transition:all .15s}
+.more-btn:hover{border-color:var(--accent2);color:var(--accent2)}
+.more-btn.active{border-color:var(--accent);color:var(--accent)}
+
+/* ── MAP ── */
 #map-wrap{flex:1;position:relative}
 #map{width:100%;height:100%}
 .leaflet-container{background:#0a0d12!important}
 .map-zoom{position:absolute;right:14px;top:14px;z-index:100;display:flex;flex-direction:column;gap:4px}
-.zoom-btn{
-  width:32px;height:32px;background:var(--bg3);border:1px solid var(--border2);
-  border-radius:5px;color:var(--text);font-size:16px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:all .15s;
-}
+.zoom-btn{width:32px;height:32px;background:var(--bg3);border:1px solid var(--border2);border-radius:5px;color:var(--text);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
 .zoom-btn:hover{background:var(--bg4);border-color:var(--accent);color:var(--accent)}
+.map-center-btn{position:absolute;right:14px;top:88px;z-index:100}
+.map-fullscreen-btn{position:absolute;right:14px;top:130px;z-index:100}
 
 /* ── RIGHT PANEL ── */
-#right-panel{
-  width:240px;flex-shrink:0;
-  background:var(--bg2);border-left:1px solid var(--border);
-  display:flex;flex-direction:column;overflow:hidden;
-}
+#right-panel{width:240px;flex-shrink:0;background:var(--bg2);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;transition:background .3s}
 .rp-section{border-bottom:1px solid var(--border);flex-shrink:0}
-.rp-header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:10px 14px;cursor:pointer;
-}
+.rp-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer;transition:background .12s;user-select:none}
+.rp-header:hover{background:var(--bg3)}
 .rp-title{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--text);display:flex;align-items:center;gap:6px}
 .rp-title svg{width:13px;height:13px;stroke:var(--accent);fill:none;stroke-width:2}
 .rp-badge-critical{background:var(--danger);color:#fff;font-family:var(--mono);font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;letter-spacing:.06em}
 #incidents-body{padding:0 14px 10px}
-.incident-item{
-  border:1px solid var(--border2);border-radius:5px;padding:8px 10px;margin-bottom:6px;
-  background:rgba(239,68,68,.05);border-left:3px solid var(--danger);
-}
+.incident-item{border:1px solid var(--border2);border-radius:5px;padding:8px 10px;margin-bottom:6px;background:rgba(239,68,68,.05);border-left:3px solid var(--danger);cursor:pointer;transition:background .15s}
+.incident-item:hover{background:rgba(239,68,68,.1)}
 .incident-item.warn{background:rgba(245,158,11,.05);border-left-color:var(--warn)}
+.incident-item.warn:hover{background:rgba(245,158,11,.1)}
+.incident-item.info{background:rgba(0,212,170,.05);border-left-color:var(--accent)}
+.incident-item.info:hover{background:rgba(0,212,170,.1)}
 .incident-title{font-size:11px;color:var(--text);font-weight:500;margin-bottom:2px}
 .incident-meta{font-family:var(--mono);font-size:9px;color:var(--text3)}
-.show-more{
-  font-family:var(--mono);font-size:9px;color:var(--accent2);
-  background:none;border:none;cursor:pointer;letter-spacing:.06em;padding:4px 0;
-}
+.show-more{font-family:var(--mono);font-size:9px;color:var(--accent2);background:none;border:none;cursor:pointer;letter-spacing:.06em;padding:4px 0;transition:color .15s}
+.show-more:hover{color:var(--accent)}
 #news-body{flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent;padding:0 14px 10px}
-.news-item{border-bottom:1px solid var(--border);padding:8px 0;cursor:pointer}
+.news-item{border-bottom:1px solid var(--border);padding:8px 0;cursor:pointer;transition:all .12s}
+.news-item:hover{background:var(--bg3);margin:0 -14px;padding:8px 14px}
 .news-item:last-child{border-bottom:none}
-.news-item:hover .news-title{color:var(--accent2)}
 .news-icon{color:var(--danger);font-size:10px;margin-bottom:3px;font-family:var(--mono)}
 .news-icon.info{color:var(--text3)}
 .news-title{font-size:11px;color:var(--text);line-height:1.45;margin-bottom:3px;transition:color .15s}
+.news-item:hover .news-title{color:var(--accent2)}
 .news-time{font-family:var(--mono);font-size:9px;color:var(--text3)}
+#news-refresh-btn{font-family:var(--mono);font-size:9px;color:var(--accent2);background:none;border:none;cursor:pointer;letter-spacing:.06em;padding:0;transition:color .15s}
+#news-refresh-btn:hover{color:var(--accent)}
+#news-refresh-btn.spinning{animation:spin .8s linear infinite}
+
+/* ── WEATHER ── */
 #weather-body{padding:12px 14px;flex-shrink:0}
 .weather-main{display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .weather-icon-big{font-size:28px;line-height:1}
-.weather-temp{font-family:var(--mono);font-size:26px;font-weight:700;color:#fff}
+.weather-temp{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--text)}
 .weather-desc{font-size:11px;color:var(--text2);margin-top:2px}
 .weather-wind{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:2px}
 .weather-stats{display:grid;grid-template-columns:1fr 1fr;gap:5px}
-.w-stat{background:var(--bg3);border-radius:4px;padding:5px 8px}
+.w-stat{background:var(--bg3);border-radius:4px;padding:5px 8px;cursor:pointer;transition:background .15s}
+.w-stat:hover{background:var(--bg4);outline:1px solid var(--accent)}
 .w-stat-label{font-family:var(--mono);font-size:8px;color:var(--text3);letter-spacing:.08em;margin-bottom:2px}
 .w-stat-val{font-size:12px;font-weight:500;color:var(--text)}
 .w-stat-val.aqi-val{font-size:13px;font-weight:700}
 #aqi-mini-bar{height:3px;border-radius:2px;margin-top:4px;background:linear-gradient(to right,#22c55e,#eab308,#f97316,#ef4444)}
-
-/* ── AQI bar fill overlay ── */
 #aqi-mini-fill{height:3px;background:var(--bg3);position:relative;margin-top:-3px;transition:width .8s;border-radius:0 2px 2px 0}
 
 /* ── FEED VIEW ── */
 #feed-view{display:none;flex:1;overflow-y:auto;padding:14px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
-.feed-item{
-  border:1px solid var(--border2);border-radius:6px;padding:10px 12px;margin-bottom:8px;
-  background:var(--bg3);border-left:3px solid var(--border2);
-  animation:fadeIn .3s ease;
-}
+.feed-item{border:1px solid var(--border2);border-radius:6px;padding:10px 12px;margin-bottom:8px;background:var(--bg3);border-left:3px solid var(--border2);animation:fadeIn .3s ease}
 .feed-item.alert{border-left-color:var(--danger)}
 .feed-item.warn{border-left-color:var(--warn)}
 .feed-item.ok{border-left-color:var(--good)}
@@ -207,39 +169,74 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .feed-detail{font-size:11px;color:var(--text2);line-height:1.5}
 .feed-time{font-family:var(--mono);font-size:9px;color:var(--text3);margin-top:4px}
 
-/* ── MARKER TOOLTIPS ── */
-.custom-tooltip{
-  background:var(--bg3);border:1px solid var(--border2);border-radius:5px;
-  padding:5px 9px;font-family:var(--mono);font-size:10px;color:var(--text);
-  box-shadow:0 4px 20px rgba(0,0,0,.6);white-space:nowrap;
-}
-.marker-temp{
-  background:rgba(245,158,11,.85);border-radius:5px;padding:3px 7px;
-  font-family:var(--mono);font-size:10px;font-weight:700;color:#000;
-  border:1px solid rgba(255,255,255,.15);
-}
-.marker-aq{
-  background:rgba(239,68,68,.85);border-radius:5px;padding:3px 7px;
-  font-family:var(--mono);font-size:10px;font-weight:700;color:#fff;
-}
+/* ── TOOLTIPS ── */
+.custom-tooltip{background:var(--bg3);border:1px solid var(--border2);border-radius:5px;padding:5px 9px;font-family:var(--mono);font-size:10px;color:var(--text);box-shadow:0 4px 20px rgba(0,0,0,.6);white-space:nowrap}
+.marker-temp{background:rgba(245,158,11,.85);border-radius:5px;padding:3px 7px;font-family:var(--mono);font-size:10px;font-weight:700;color:#000;border:1px solid rgba(255,255,255,.15)}
 
-/* scrollbar */
+/* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
 
-/* ── LOADING OVERLAY ── */
-#loading{
-  position:fixed;inset:0;background:var(--bg);z-index:9999;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
-}
-.load-spinner{
-  width:40px;height:40px;border:2px solid var(--border2);
-  border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite;
-}
+/* ── LOADING ── */
+#loading{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+.load-spinner{width:40px;height:40px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .load-text{font-family:var(--mono);font-size:12px;color:var(--text3);letter-spacing:.12em}
 #loading-sub{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:.08em;opacity:.6}
+
+/* ── MODAL ── */
+#modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:5000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+#modal-overlay.open{display:flex}
+#modal-box{background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:24px;min-width:320px;max-width:520px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.8);animation:fadeIn .2s ease}
+.modal-title{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.modal-close{background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer;padding:0;line-height:1;transition:color .15s}
+.modal-close:hover{color:var(--text)}
+.modal-body{font-size:13px;color:var(--text2);line-height:1.6}
+.modal-btn{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;padding:8px 16px;border-radius:5px;cursor:pointer;border:none;margin-top:16px;transition:all .15s}
+.modal-btn-primary{background:var(--accent);color:#000}
+.modal-btn-primary:hover{background:#00efbc}
+.modal-btn-secondary{background:none;border:1px solid var(--border2);color:var(--text2);margin-left:8px}
+.modal-btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── LAYERS PANEL ── */
+#layers-panel{position:absolute;top:44px;right:0;z-index:300;background:var(--bg2);border:1px solid var(--border2);border-radius:0 0 8px 8px;min-width:200px;padding:12px;display:none;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+#layers-panel.open{display:block;animation:fadeIn .15s ease}
+.layer-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:11px;color:var(--text)}
+.layer-row:last-child{border-bottom:none}
+.layer-toggle{width:32px;height:18px;border-radius:9px;border:none;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0}
+.layer-toggle.on{background:var(--accent)}
+.layer-toggle.off{background:var(--border2)}
+.layer-toggle::after{content:'';position:absolute;width:12px;height:12px;border-radius:50%;background:#fff;top:3px;transition:left .2s}
+.layer-toggle.on::after{left:17px}
+.layer-toggle.off::after{left:3px}
+
+/* ── SIGN IN ── */
+.signin-input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:5px;padding:8px 12px;color:var(--text);font-family:var(--sans);font-size:13px;margin-bottom:10px;outline:none;transition:border-color .15s}
+.signin-input:focus{border-color:var(--accent)}
+.signin-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--text3);margin-bottom:4px;display:block}
+
+/* ── INCIDENT DETAIL ── */
+.detail-row{display:flex;gap:8px;margin-bottom:8px;font-size:12px}
+.detail-key{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.08em;min-width:70px;padding-top:2px}
+.detail-val{color:var(--text);line-height:1.5}
+.severity-pill{display:inline-block;font-family:var(--mono);font-size:9px;font-weight:700;padding:2px 8px;border-radius:3px;letter-spacing:.06em}
+.sev-critical{background:rgba(239,68,68,.2);color:var(--danger);border:1px solid rgba(239,68,68,.4)}
+.sev-major{background:rgba(245,158,11,.2);color:var(--warn);border:1px solid rgba(245,158,11,.4)}
+.sev-minor{background:rgba(0,212,170,.2);color:var(--accent);border:1px solid rgba(0,212,170,.4)}
+
+/* ── SEARCH BAR ── */
+#search-wrap{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:400;width:280px;display:none}
+#search-wrap.open{display:block;animation:fadeIn .15s ease}
+#search-input{width:100%;background:var(--bg2);border:1px solid var(--accent);border-radius:6px;padding:8px 14px;color:var(--text);font-family:var(--mono);font-size:11px;outline:none;box-shadow:0 4px 20px rgba(0,0,0,.5)}
+#search-results{background:var(--bg2);border:1px solid var(--border2);border-radius:0 0 6px 6px;margin-top:2px;overflow:hidden}
+.search-result-item{padding:8px 14px;cursor:pointer;font-size:11px;color:var(--text);font-family:var(--mono);transition:background .1s;border-bottom:1px solid var(--border)}
+.search-result-item:last-child{border-bottom:none}
+.search-result-item:hover{background:var(--bg3);color:var(--accent)}
+
+/* ── TOAST ── */
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:8px 16px;font-family:var(--mono);font-size:10px;color:var(--text);z-index:8000;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
@@ -252,8 +249,21 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   <div id="loading-sub">Connecting to live feeds…</div>
 </div>
 
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- Modal -->
+<div id="modal-overlay" onclick="closeModalOnBg(event)">
+  <div id="modal-box">
+    <div class="modal-title"><span id="modal-title-text">INFO</span><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="modal-body" id="modal-body-content"></div>
+    <div id="modal-footer"></div>
+  </div>
+</div>
+
+<!-- Topbar -->
 <div id="topbar">
-  <div id="topbar-brand">
+  <div id="topbar-brand" onclick="openAboutModal()" title="About KSM">
     <div class="brand-icon">
       <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
     </div>
@@ -263,39 +273,41 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     </div>
   </div>
   <div id="topbar-center">
-    <div class="live-badge"><div class="live-dot"></div>LIVE</div>
-    <div id="clock">--:--:--</div>
-    <div class="conn-badge"><div class="conn-dot"></div><span id="conn-status">CONNECTING</span></div>
-    <div id="updated">Updated less than a minute ago</div>
+    <div class="live-badge" onclick="openSystemStatus()" title="System status"><div class="live-dot"></div>LIVE</div>
+    <div id="clock" onclick="toggleClockFormat()" title="Toggle 12/24h"></div>
+    <div class="conn-badge" onclick="openSystemStatus()" title="Connection status"><div class="conn-dot"></div><span id="conn-status">CONNECTING</span></div>
+    <div id="updated" onclick="refreshAll()" title="Click to refresh">Updated less than a minute ago</div>
   </div>
   <div id="topbar-right">
-    <button class="topbar-btn" onclick="toggleTheme()">☀</button>
+    <button class="topbar-btn" id="search-btn" onclick="toggleSearch()" title="Search locations">⌕ SEARCH</button>
+    <button class="topbar-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle light/dark mode">☀ THEME</button>
     <button class="topbar-btn" id="refresh-btn" onclick="refreshAll()">↺ REFRESH</button>
-    <button class="topbar-btn" style="color:var(--accent);border-color:var(--accent)">SIGN IN</button>
+    <button class="topbar-btn" id="signin-btn" style="color:var(--accent);border-color:var(--accent)" onclick="openSignIn()">SIGN IN</button>
   </div>
 </div>
 
 <div id="layout">
-  <!-- LEFT PANEL: Metro Lines -->
+  <!-- LEFT PANEL -->
   <div id="left-panel">
     <div id="left-header">
-      <div class="panel-title">
+      <div class="panel-title" onclick="openMetroOverview()" title="Metro system overview">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         METRO STATUS
       </div>
       <div class="left-stats">
-        <span class="stat-ok" id="metro-ok">✓ 2/6</span>
-        <span class="stat-warn" id="metro-issues">⚠ Loading</span>
+        <span class="stat-ok" id="metro-ok" onclick="filterMetroByStatus('good')" title="Show good lines">✓ 2/6</span>
+        <span class="stat-warn" id="metro-issues" onclick="filterMetroByStatus('issues')" title="Show lines with issues">⚠ Loading</span>
       </div>
     </div>
-    <div id="metro-list">
-      <!-- Kolkata Metro lines -->
+    <div id="metro-list"></div>
+    <div id="left-footer">
+      <button class="left-footer-btn" onclick="openMetroOverview()">VIEW ALL LINES ›</button>
     </div>
   </div>
 
   <!-- CENTER -->
   <div id="center">
-    <div id="map-toolbar">
+    <div id="map-toolbar" style="position:relative">
       <button class="view-btn active" id="btn-map" onclick="switchView('map')">
         <svg viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
         MAP VIEW
@@ -305,8 +317,25 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         FEED VIEW <span id="alert-count">0</span>
       </button>
       <div style="flex:1"></div>
-      <button class="topbar-btn" onclick="refreshAll()" style="font-size:10px">↺</button>
+      <button class="topbar-btn" id="map-center-topbtn" onclick="centerMap()" title="Re-center map" style="font-size:10px">⊕ CENTER</button>
+      <button class="topbar-btn" onclick="exportReport()" title="Export status report" style="font-size:10px">⬇ EXPORT</button>
+      <button class="topbar-btn" onclick="refreshAll()" title="Refresh all data" style="font-size:10px">↺</button>
+      <!-- Search overlay -->
+      <div id="search-wrap">
+        <input id="search-input" placeholder="Search location, station…" oninput="doSearch(this.value)" onkeydown="handleSearchKey(event)"/>
+        <div id="search-results"></div>
+      </div>
+      <!-- Layers panel -->
+      <div id="layers-panel">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.12em;margin-bottom:8px">ADDITIONAL LAYERS</div>
+        <div class="layer-row"><span>🚦 Traffic Flow</span><button class="layer-toggle off" id="lt-traffic" onclick="toggleLayerBtn('traffic')"></button></div>
+        <div class="layer-row"><span>🌧️ Flood Zones</span><button class="layer-toggle off" id="lt-flood" onclick="toggleLayerBtn('flood')"></button></div>
+        <div class="layer-row"><span>🏥 Hospitals</span><button class="layer-toggle off" id="lt-hosp" onclick="toggleLayerBtn('hosp')"></button></div>
+        <div class="layer-row"><span>🚒 Fire Stations</span><button class="layer-toggle off" id="lt-fire" onclick="toggleLayerBtn('fire')"></button></div>
+        <div class="layer-row"><span>⚡ Power Grid</span><button class="layer-toggle off" id="lt-power" onclick="toggleLayerBtn('power')"></button></div>
+      </div>
     </div>
+
     <div id="filter-bar">
       <span class="filter-label">ALERTS</span>
       <div class="filter-chip active" id="f-incidents" onclick="toggleFilter('incidents')">
@@ -329,13 +358,16 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       <div class="filter-chip active" id="f-metro" onclick="toggleFilter('metro')">🚇 Metro</div>
       <div class="filter-chip active" id="f-aq" onclick="toggleFilter('aq')">💨 Air Quality</div>
       <div class="filter-chip active" id="f-temp" onclick="toggleFilter('temp')">🌡️ Temp</div>
-      <button class="more-btn">+3 More</button>
+      <button class="more-btn" id="more-layers-btn" onclick="toggleLayersPanel(event)">+5 More</button>
     </div>
+
     <div id="map-wrap">
       <div id="map"></div>
       <div class="map-zoom">
-        <button class="zoom-btn" onclick="mapInst.zoomIn()">+</button>
-        <button class="zoom-btn" onclick="mapInst.zoomOut()">−</button>
+        <button class="zoom-btn" onclick="mapInst.zoomIn()" title="Zoom in">+</button>
+        <button class="zoom-btn" onclick="mapInst.zoomOut()" title="Zoom out">−</button>
+        <button class="zoom-btn" onclick="centerMap()" title="Re-center" style="font-size:12px">⊕</button>
+        <button class="zoom-btn" onclick="toggleFullscreen()" title="Fullscreen" style="font-size:11px" id="fs-btn">⤢</button>
       </div>
     </div>
     <div id="feed-view"></div>
@@ -344,37 +376,41 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   <!-- RIGHT PANEL -->
   <div id="right-panel">
     <div class="rp-section">
-      <div class="rp-header">
+      <div class="rp-header" onclick="toggleIncidentsPanel()">
         <div class="rp-title">
           <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
           ACTIVE INCIDENTS
         </div>
-        <span class="rp-badge-critical" id="inc-count">–</span>
+        <span class="rp-badge-critical" id="inc-count" title="Click to collapse/expand">–</span>
       </div>
       <div id="incidents-body">
-        <div class="incident-item">
+        <div class="incident-item info">
           <div class="incident-title">Loading incidents…</div>
           <div class="incident-meta">Fetching live data</div>
         </div>
       </div>
     </div>
+
     <div class="rp-section" style="flex:1;display:flex;flex-direction:column;overflow:hidden">
-      <div class="rp-header">
+      <div class="rp-header" onclick="refreshNews()" title="Click to refresh news">
         <div class="rp-title">
-          <svg viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2zm0 0"></path></svg>
+          <svg viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2zm0 0"/></svg>
           LATEST NEWS
         </div>
+        <span id="news-refresh-btn" title="Refresh news">↺</span>
       </div>
       <div id="news-body">
         <div style="text-align:center;padding:20px;font-family:var(--mono);font-size:10px;color:var(--text3)">Loading news…</div>
       </div>
     </div>
+
     <div class="rp-section">
-      <div class="rp-header">
+      <div class="rp-header" onclick="openWeatherDetail()">
         <div class="rp-title">
           <svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
           WEATHER
         </div>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--text3)">DETAIL ›</span>
       </div>
       <div id="weather-body">
         <div class="weather-main">
@@ -382,14 +418,14 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
           <div>
             <div class="weather-temp" id="w-temp">–</div>
             <div class="weather-desc" id="w-desc">Loading…</div>
-            <div class="weather-wind" id="w-wind">–</div>
+            <div class="weather-wind" id="w-wind" style="cursor:pointer" onclick="showWeatherStat('wind')" title="Wind details">–</div>
           </div>
         </div>
         <div class="weather-stats">
-          <div class="w-stat"><div class="w-stat-label">HUMIDITY</div><div class="w-stat-val" id="w-hum">–</div></div>
-          <div class="w-stat"><div class="w-stat-label">FEELS LIKE</div><div class="w-stat-val" id="w-feels">–</div></div>
-          <div class="w-stat"><div class="w-stat-label">UV INDEX</div><div class="w-stat-val" id="w-uv">–</div></div>
-          <div class="w-stat">
+          <div class="w-stat" onclick="showWeatherStat('humidity')" title="Humidity detail"><div class="w-stat-label">HUMIDITY</div><div class="w-stat-val" id="w-hum">–</div></div>
+          <div class="w-stat" onclick="showWeatherStat('feels')" title="Feels like detail"><div class="w-stat-label">FEELS LIKE</div><div class="w-stat-val" id="w-feels">–</div></div>
+          <div class="w-stat" onclick="showWeatherStat('uv')" title="UV Index detail"><div class="w-stat-label">UV INDEX</div><div class="w-stat-val" id="w-uv">–</div></div>
+          <div class="w-stat" onclick="showWeatherStat('aqi')" title="Air quality detail">
             <div class="w-stat-label">AQI (US)</div>
             <div class="w-stat-val aqi-val" id="w-aqi">–</div>
             <div id="aqi-mini-bar"></div>
@@ -403,18 +439,44 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
+// ── CONSTANTS ──
 const LAT=22.5726,LON=88.3639;
 const WMO={0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Foggy',48:'Icy fog',51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',61:'Light rain',63:'Rain',65:'Heavy rain',71:'Light snow',73:'Snow',80:'Showers',81:'Showers',82:'Heavy showers',95:'Thunderstorm',96:'Thunderstorm+hail',99:'Thunderstorm+hail'};
 const WMO_ICON={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌧️',55:'🌧️',61:'🌧️',63:'🌧️',65:'⛈️',71:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
 
-// Metro lines for Kolkata
+let lastWeatherData=null,lastAQData=null,lastIncidents=[],isSignedIn=false,clock24h=true,incidentsPanelOpen=true;
+let signedInName='Operator';
+
 const METRO_LINES=[
-  {name:'Line 1 (N-S)',color:'#3b82f6',status:'good',detail:'Good service'},
-  {name:'Line 2 (E-W)',color:'#22c55e',status:'warn',detail:'Partial service'},
-  {name:'Line 3 (Joka-BBD)',color:'#f59e0b',status:'planned',detail:'Planned works'},
-  {name:'Line 4 (Tagore Park)',color:'#a855f7',status:'severe',detail:'Suspended'},
-  {name:'Line 5 (New Garia)',color:'#ef4444',status:'warn',detail:'Delays 10-20 min'},
-  {name:'Line 6 (New Town)',color:'#06b6d4',status:'good',detail:'Good service'},
+  {name:'Line 1 (N-S)',color:'#3b82f6',status:'good',detail:'Good service',coords:[LAT+.05,LON-.015],stations:['Dum Dum','Belgachia','Shyambazar','Shobhabazar','Girish Park','MG Road','Central','Chandni Chowk','Esplanade','Park Street','Maidan','Rabindra Sarani']},
+  {name:'Line 2 (E-W)',color:'#22c55e',status:'warn',detail:'Partial service — signal fault between Sealdah and Phoolbagan',coords:[LAT,LON+.04],stations:['Howrah Maidan','Howrah','Mahakaran','Esplanade','Sealdah','Phoolbagan','SN Roy Road']},
+  {name:'Line 3 (Joka-BBD)',color:'#f59e0b',status:'planned',detail:'Planned engineering works Sat–Sun 22:00–05:00',coords:[LAT-.07,LON-.02],stations:['Joka','Thakurpukur','Sakher Bazar','Behala Chowrasta','Behala Bazar','Taratala']},
+  {name:'Line 4 (Tagore Park)',color:'#a855f7',status:'severe',detail:'Suspended — flood damage under repair',coords:[LAT-.04,LON-.05],stations:['Noapara','Baranagar','Dakshineswar']},
+  {name:'Line 5 (New Garia)',color:'#ef4444',status:'warn',detail:'Delays 10–20 min due to track inspection',coords:[LAT-.09,LON+.01],stations:['New Garia','Ruby','Hemanta Mukhopadhyay','Kavi Subhash']},
+  {name:'Line 6 (New Town)',color:'#06b6d4',status:'good',detail:'Good service',coords:[LAT+.07,LON+.07],stations:['Salt Lake Sector V','Karunamoyee','Central Park','City Centre','Bengal Chemical','Phoolbagan']},
+];
+
+const HOSPITALS=[
+  [LAT+.02,LON+.02,'SSKM Hospital','Public'],[LAT-.01,LON-.02,'Calcutta Medical College','Public'],
+  [LAT+.04,LON+.03,'Ruby General Hospital','Private'],[LAT-.03,LON+.03,'Fortis Anandapur','Private'],
+  [LAT+.01,LON-.04,'Howrah General Hospital','Public'],[LAT-.05,LON+.01,'Peerless Hospital','Private'],
+];
+const FIRE_STATIONS=[
+  [LAT+.01,LON-.01,'Lalbazar Fire Station'],[LAT-.02,LON+.02,'Kasba Fire Station'],
+  [LAT+.05,LON+.03,'Salt Lake Fire Station'],[LAT-.04,LON-.03,'Howrah Fire Station'],
+];
+const POWER_NODES=[
+  [LAT+.03,LON+.02,'Bidyut Nagar Sub-station','operational'],[LAT-.02,LON-.02,'Howrah Grid','operational'],
+  [LAT+.06,LON+.04,'Salt Lake Grid','operational'],[LAT-.05,LON+.03,'Tollygunge Sub-station','warning'],
+  [LAT+.01,LON+.05,'New Town Grid','operational'],
+];
+const SEARCHABLE=[
+  {name:'Esplanade',lat:LAT,lon:LON-.01,type:'metro'},{name:'Park Street',lat:LAT+.02,lon:LON-.01,type:'metro'},
+  {name:'Howrah Bridge',lat:LAT+.01,lon:LON-.05,type:'landmark'},{name:'Victoria Memorial',lat:LAT-.01,lon:LON,type:'landmark'},
+  {name:'Salt Lake',lat:LAT+.06,lon:LON+.05,type:'area'},{name:'Rajarhat',lat:LAT+.07,lon:LON+.08,type:'area'},
+  {name:'Jadavpur',lat:LAT-.05,lon:LON+.04,type:'area'},{name:'Behala',lat:LAT-.06,lon:LON-.04,type:'area'},
+  {name:'Dum Dum Airport',lat:LAT+.08,lon:LON+.01,type:'transport'},{name:'Sealdah Station',lat:LAT+.01,lon:LON+.02,type:'transport'},
+  {name:'Howrah Station',lat:LAT+.01,lon:LON-.05,type:'transport'},{name:'SSKM Hospital',lat:LAT+.02,lon:LON+.02,type:'hospital'},
 ];
 
 // ── MAP ──
@@ -423,223 +485,430 @@ function initMap(){
   mapInst=L.map('map',{zoomControl:false,attributionControl:false}).setView([LAT,LON],13);
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:19}).addTo(mapInst);
   L.control.attribution({prefix:'© OpenStreetMap, CartoDB'}).addTo(mapInst);
+  mapInst.on('click',()=>{
+    document.getElementById('search-wrap').classList.remove('open');
+    document.getElementById('layers-panel').classList.remove('open');
+    document.getElementById('more-layers-btn').classList.remove('active');
+  });
 }
+function makeIcon(html){return L.divIcon({className:'',html,iconAnchor:[28,12]})}
+function centerMap(){mapInst.setView([LAT,LON],13,{animate:true});showToast('Map re-centred to Kolkata');}
 
-function makeIcon(html,cls){
-  return L.divIcon({className:'',html:`<div class="${cls}">${html}</div>`,iconAnchor:[24,12]});
-}
+// ── MARKER GROUPS ──
+let weatherMarkers=[],aqMarkers=[],metroMarkers=[],trafficMarkers=[],floodMarkers=[],incidentMapMarkers=[],hospMarkers=[],fireMarkers=[],powerMarkers=[];
+const activeFilters=new Set(['incidents','metro','aq','temp']);
+const extraLayers=new Set();
 
-let weatherMarkers=[], aqMarkers=[], metroMarkers=[];
-
+// WEATHER MARKERS
 function addWeatherMarkers(d){
-  weatherMarkers.forEach(m=>mapInst.removeLayer(m));
-  weatherMarkers=[];
-  const c=d.current;
-  const temp=Math.round(c.temperature_2m);
-  // Kolkata neighborhoods with slight coord offsets
-  const pts=[
-    [LAT,LON,'Kolkata'],
-    [LAT+.04,LON-.03,'Dum Dum'],
-    [LAT-.04,LON+.04,'Jadavpur'],
-    [LAT+.06,LON+.05,'Salt Lake'],
-    [LAT-.06,LON-.04,'Behala'],
-    [LAT+.02,LON+.08,'Rajarhat'],
-    [LAT-.08,LON+.02,'Tollygunge'],
-  ];
-  pts.forEach(([lt,ln,name],i)=>{
-    const t=temp+(Math.round((Math.random()-.5)*3));
-    const icon=L.divIcon({className:'',html:`<div class="marker-temp">☁ ${t}°</div>`,iconAnchor:[28,12]});
-    const m=L.marker([lt,ln],{icon}).addTo(mapInst);
+  weatherMarkers.forEach(m=>mapInst.removeLayer(m));weatherMarkers=[];
+  if(!activeFilters.has('temp'))return;
+  const c=d.current;const temp=Math.round(c.temperature_2m);
+  const pts=[[LAT,LON,'Kolkata'],[LAT+.04,LON-.03,'Dum Dum'],[LAT-.04,LON+.04,'Jadavpur'],[LAT+.06,LON+.05,'Salt Lake'],[LAT-.06,LON-.04,'Behala'],[LAT+.02,LON+.08,'Rajarhat'],[LAT-.08,LON+.02,'Tollygunge']];
+  pts.forEach(([lt,ln,name])=>{
+    const t=temp+Math.round((Math.random()-.5)*3);
+    const m=L.marker([lt,ln],{icon:makeIcon(`<div class="marker-temp">${WMO_ICON[c.weather_code]||'☁'} ${t}°</div>`)}).addTo(mapInst);
     m.bindTooltip(`<div class="custom-tooltip">${name}: ${t}°C | ${WMO[c.weather_code]||'–'}</div>`,{className:'',permanent:false});
+    m.on('click',()=>openWeatherDetail());
     weatherMarkers.push(m);
   });
 }
 
+// AQ MARKERS
 function addAQMarkers(d){
-  aqMarkers.forEach(m=>mapInst.removeLayer(m));
-  aqMarkers=[];
-  if(!d||!d.current) return;
+  aqMarkers.forEach(m=>mapInst.removeLayer(m));aqMarkers=[];
+  if(!d?.current||!activeFilters.has('aq'))return;
   const aqi=Math.round(d.current.us_aqi);
   const col=aqi>150?'rgba(239,68,68,.9)':aqi>100?'rgba(245,158,11,.9)':'rgba(34,197,94,.9)';
   const tcol=aqi>150?'#fff':'#000';
-  const pts=[
-    [LAT+.01,LON+.01,'Park Street'],[LAT-.02,LON+.03,'Alipore'],
-    [LAT+.03,LON-.01,'Shyambazar'],[LAT-.01,LON-.03,'Howrah'],
-    [LAT+.05,LON+.02,'Bidhannagar']
-  ];
+  const pts=[[LAT+.01,LON+.01,'Park Street'],[LAT-.02,LON+.03,'Alipore'],[LAT+.03,LON-.01,'Shyambazar'],[LAT-.01,LON-.03,'Howrah'],[LAT+.05,LON+.02,'Bidhannagar']];
   pts.forEach(([lt,ln,name])=>{
     const v=aqi+Math.round((Math.random()-.5)*20);
-    const icon=L.divIcon({className:'',html:`<div style="background:${col};border-radius:4px;padding:3px 7px;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;color:${tcol};border:1px solid rgba(255,255,255,.2)">AQI ${v}</div>`,iconAnchor:[28,12]});
+    const icon=makeIcon(`<div style="background:${col};border-radius:4px;padding:3px 7px;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;color:${tcol};border:1px solid rgba(255,255,255,.2)">AQI ${v}</div>`);
     const m=L.marker([lt,ln],{icon}).addTo(mapInst);
     m.bindTooltip(`<div class="custom-tooltip">💨 ${name} AQI: ${v}</div>`,{className:'',permanent:false});
+    m.on('click',()=>showWeatherStat('aqi'));
     aqMarkers.push(m);
   });
 }
 
+// METRO MARKERS
 function addMetroMarkers(){
-  metroMarkers.forEach(m=>mapInst.removeLayer(m));
-  metroMarkers=[];
+  metroMarkers.forEach(m=>mapInst.removeLayer(m));metroMarkers=[];
+  if(!activeFilters.has('metro'))return;
   const stations=[
-    [LAT,LON-.01,'Esplanade','#3b82f6'],
-    [LAT+.02,LON-.01,'Park Street','#3b82f6'],
-    [LAT-.02,LON-.01,'Maidan','#3b82f6'],
-    [LAT,LON+.03,'Sealdah','#22c55e'],
-    [LAT-.01,LON+.05,'Phoolbagan','#22c55e'],
-    [LAT+.04,LON-.02,'Shyambazar','#3b82f6'],
+    [LAT,LON-.01,'Esplanade','#3b82f6',0],[LAT+.02,LON-.01,'Park Street','#3b82f6',0],
+    [LAT-.02,LON-.01,'Maidan','#3b82f6',0],[LAT,LON+.03,'Sealdah','#22c55e',1],
+    [LAT-.01,LON+.05,'Phoolbagan','#22c55e',1],[LAT+.04,LON-.02,'Shyambazar','#3b82f6',0],
+    [LAT+.06,LON+.05,'Salt Lake Sector V','#06b6d4',5],[LAT-.06,LON-.04,'Behala Chowrasta','#f59e0b',2],
+    [LAT+.07,LON+.07,'Karunamoyee','#06b6d4',5],[LAT-.09,LON+.01,'New Garia','#ef4444',4],
   ];
-  stations.forEach(([lt,ln,name,col])=>{
+  stations.forEach(([lt,ln,name,col,lineIdx])=>{
     const icon=L.divIcon({className:'',html:`<div style="width:10px;height:10px;border-radius:50%;background:${col};border:2px solid #fff;box-shadow:0 0 6px ${col}"></div>`,iconAnchor:[5,5]});
     const m=L.marker([lt,ln],{icon}).addTo(mapInst);
-    m.bindTooltip(`<div class="custom-tooltip">🚇 ${name}</div>`,{className:'',permanent:false});
+    m.bindTooltip(`<div class="custom-tooltip">🚇 ${name} — ${METRO_LINES[lineIdx].name}</div>`,{className:'',permanent:false});
+    m.on('click',()=>openLineDetail(METRO_LINES[lineIdx].name,col,METRO_LINES[lineIdx]));
     metroMarkers.push(m);
   });
 }
 
+// TRAFFIC MARKERS
+function addTrafficMarkers(){
+  trafficMarkers.forEach(m=>mapInst.removeLayer(m));trafficMarkers=[];
+  if(!activeFilters.has('traffic')&&!extraLayers.has('traffic'))return;
+  const pts=[[LAT+.01,LON-.02,'EM Bypass','heavy'],[LAT-.01,LON+.02,'AJC Bose Rd','moderate'],[LAT+.03,LON+.01,'VIP Rd','light'],[LAT-.02,LON-.01,'Strand Rd','heavy'],[LAT+.02,LON+.04,'RP Sarani','moderate'],[LAT-.04,LON-.02,'Diamond Harbour Rd','light']];
+  pts.forEach(([lt,ln,name,level])=>{
+    const col=level==='heavy'?'#ef4444':level==='moderate'?'#f59e0b':'#22c55e';
+    const icon=makeIcon(`<div style="background:${col};border-radius:4px;padding:2px 6px;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;color:#fff">🚦 ${level.toUpperCase()}</div>`);
+    const m=L.marker([lt,ln],{icon}).addTo(mapInst);
+    m.bindTooltip(`<div class="custom-tooltip">${name}: ${level} traffic</div>`,{className:'',permanent:false});
+    m.on('click',()=>openModal('TRAFFIC — '+name,`<div class="detail-row"><span class="detail-key">ROAD</span><span class="detail-val">${name}</span></div><div class="detail-row"><span class="detail-key">LEVEL</span><span class="detail-val" style="color:${col};font-weight:600">${level.toUpperCase()}</span></div><div class="detail-row"><span class="detail-key">ADVICE</span><span class="detail-val">${level==='heavy'?'Avoid if possible. Use alternate routes.':level==='moderate'?'Expect 10–15 min delays.':'Normal flow. No action needed.'}</span></div>`,'CLOSE'));
+    trafficMarkers.push(m);
+  });
+}
+
+// FLOOD MARKERS
+function addFloodMarkers(){
+  floodMarkers.forEach(m=>mapInst.removeLayer(m));floodMarkers=[];
+  if(!activeFilters.has('floods')&&!extraLayers.has('flood'))return;
+  const pts=[[LAT-.05,LON+.02,'Kasba Low-lying Area','moderate'],[LAT+.03,LON-.04,'Garden Reach Flood Zone','high'],[LAT-.03,LON+.05,'E.M. Bypass Drain Zone','low']];
+  pts.forEach(([lt,ln,desc,risk])=>{
+    const col=risk==='high'?'rgba(239,68,68,.9)':risk==='moderate'?'rgba(245,158,11,.9)':'rgba(0,153,255,.85)';
+    const icon=makeIcon(`<div style="background:${col};border-radius:4px;padding:2px 6px;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;color:#fff">🌊 ${risk.toUpperCase()}</div>`);
+    const m=L.marker([lt,ln],{icon}).addTo(mapInst);
+    m.bindTooltip(`<div class="custom-tooltip">💧 ${desc} — ${risk} risk</div>`,{className:'',permanent:false});
+    m.on('click',()=>openModal('FLOOD ZONE',`<div class="detail-row"><span class="detail-key">ZONE</span><span class="detail-val">${desc}</span></div><div class="detail-row"><span class="detail-key">RISK LEVEL</span><span class="detail-val" style="color:${col};font-weight:600">${risk.toUpperCase()}</span></div><div class="detail-row"><span class="detail-key">ADVISORY</span><span class="detail-val">${risk==='high'?'Evacuate if instructed. Avoid wading.':risk==='moderate'?'Monitor KMC alerts. Keep emergency kit ready.':'Low risk. Routine monitoring.'}</span></div>`,'CLOSE'));
+    floodMarkers.push(m);
+  });
+}
+
+// HOSPITAL MARKERS (new)
+function addHospitalMarkers(){
+  hospMarkers.forEach(m=>mapInst.removeLayer(m));hospMarkers=[];
+  if(!extraLayers.has('hosp'))return;
+  HOSPITALS.forEach(([lt,ln,name,type])=>{
+    const icon=makeIcon(`<div style="background:rgba(239,68,68,.9);border-radius:4px;padding:2px 6px;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;color:#fff">🏥 H</div>`);
+    const m=L.marker([lt,ln],{icon}).addTo(mapInst);
+    m.bindTooltip(`<div class="custom-tooltip">🏥 ${name}</div>`,{className:'',permanent:false});
+    m.on('click',()=>openModal('HOSPITAL',`<div class="detail-row"><span class="detail-key">NAME</span><span class="detail-val">${name}</span></div><div class="detail-row"><span class="detail-key">TYPE</span><span class="detail-val">${type}</span></div><div class="detail-row"><span class="detail-key">STATUS</span><span class="detail-val" style="color:var(--good)">● Operational</span></div><div class="detail-row"><span class="detail-key">EMERGENCY</span><span class="detail-val">Call 108 or 033-2241-4000</span></div>`,'CLOSE'));
+    hospMarkers.push(m);
+  });
+}
+
+// FIRE STATION MARKERS (new)
+function addFireMarkers(){
+  fireMarkers.forEach(m=>mapInst.removeLayer(m));fireMarkers=[];
+  if(!extraLayers.has('fire'))return;
+  FIRE_STATIONS.forEach(([lt,ln,name])=>{
+    const icon=makeIcon(`<div style="background:rgba(249,115,22,.9);border-radius:4px;padding:2px 6px;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;color:#fff">🚒 F</div>`);
+    const m=L.marker([lt,ln],{icon}).addTo(mapInst);
+    m.bindTooltip(`<div class="custom-tooltip">🚒 ${name}</div>`,{className:'',permanent:false});
+    m.on('click',()=>openModal('FIRE STATION',`<div class="detail-row"><span class="detail-key">STATION</span><span class="detail-val">${name}</span></div><div class="detail-row"><span class="detail-key">STATUS</span><span class="detail-val" style="color:var(--good)">● Ready</span></div><div class="detail-row"><span class="detail-key">EMERGENCY</span><span class="detail-val">Call 101</span></div>`,'CLOSE'));
+    fireMarkers.push(m);
+  });
+}
+
+// POWER GRID MARKERS (new)
+function addPowerMarkers(){
+  powerMarkers.forEach(m=>mapInst.removeLayer(m));powerMarkers=[];
+  if(!extraLayers.has('power'))return;
+  POWER_NODES.forEach(([lt,ln,name,status])=>{
+    const col=status==='warning'?'rgba(245,158,11,.9)':'rgba(250,204,21,.9)';
+    const tcol='#000';
+    const icon=makeIcon(`<div style="background:${col};border-radius:4px;padding:2px 6px;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;color:${tcol}">⚡ ${status==='warning'?'!':'OK'}</div>`);
+    const m=L.marker([lt,ln],{icon}).addTo(mapInst);
+    m.bindTooltip(`<div class="custom-tooltip">⚡ ${name}</div>`,{className:'',permanent:false});
+    m.on('click',()=>openModal('POWER NODE',`<div class="detail-row"><span class="detail-key">NODE</span><span class="detail-val">${name}</span></div><div class="detail-row"><span class="detail-key">STATUS</span><span class="detail-val" style="color:${status==='warning'?'var(--warn)':'var(--good)'}">● ${status==='warning'?'Warning — reduced capacity':'Operational'}</span></div><div class="detail-row"><span class="detail-key">LOAD</span><span class="detail-val">${status==='warning'?'87% — near peak':'62% — normal'}</span></div>`,'CLOSE'));
+    powerMarkers.push(m);
+  });
+}
+
+// INCIDENT MAP MARKERS (new — pins on map for each incident)
+function addIncidentMapMarkers(){
+  incidentMapMarkers.forEach(m=>mapInst.removeLayer(m));incidentMapMarkers=[];
+  if(!activeFilters.has('incidents')||!lastIncidents.length)return;
+  const offsets=[[.005,.008],[-.006,.003],[.003,-.007],[-.004,-.005],[.008,-.003]];
+  lastIncidents.forEach((inc,idx)=>{
+    const [dlat,dlon]=offsets[idx%offsets.length];
+    const col=inc.severity==='critical'?'#ef4444':inc.severity==='major'?'#f59e0b':'#00d4aa';
+    const icon=makeIcon(`<div style="background:${col};border-radius:4px;padding:2px 6px;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;color:#000;white-space:nowrap">⚠ ${inc.type.toUpperCase()}</div>`);
+    const m=L.marker([LAT+dlat,LON+dlon],{icon}).addTo(mapInst);
+    m.bindTooltip(`<div class="custom-tooltip">⚠ ${inc.title}</div>`,{className:'',permanent:false});
+    m.on('click',()=>openIncidentDetail(idx));
+    incidentMapMarkers.push(m);
+  });
+}
+
 // ── LEFT PANEL ──
+let metroFilter=null;
 function renderMetroList(){
   const list=document.getElementById('metro-list');
   let ok=0,issues=0;
-  list.innerHTML=METRO_LINES.map(line=>{
-    const badgeCls=line.status==='good'?'badge-good':line.status==='planned'?'badge-planned':line.status==='severe'?'badge-severe':'badge-warn';
-    const label=line.status==='good'?'Good':line.status==='planned'?'Planned':line.status==='severe'?'Severe':'Part';
-    if(line.status==='good') ok++; else issues++;
-    return `<div class="metro-line">
+  const lines=metroFilter?METRO_LINES.filter(l=>metroFilter==='good'?l.status==='good':l.status!=='good'):METRO_LINES;
+  list.innerHTML=lines.map((line,i)=>{
+    const realIdx=METRO_LINES.indexOf(line);
+    const cls=line.status==='good'?'badge-good':line.status==='planned'?'badge-planned':line.status==='severe'?'badge-severe':'badge-warn';
+    const label=line.status==='good'?'Good':line.status==='planned'?'Planned':line.status==='severe'?'Suspended':'Delays';
+    if(line.status==='good')ok++;else issues++;
+    return `<div class="metro-line" onclick="focusMetroLine(${realIdx})">
       <div class="line-color-bar" style="background:${line.color}"></div>
       <div style="flex:1"><div class="line-name">${line.name}</div><div style="font-size:10px;color:var(--text3);margin-top:1px">${line.detail}</div></div>
-      <span class="line-badge ${badgeCls}">${label}</span>
+      <span class="line-badge ${cls}">${label}</span>
       <span class="line-arrow">›</span>
     </div>`;
   }).join('');
+  if(metroFilter){
+    list.innerHTML=`<div style="padding:6px 14px;font-family:var(--mono);font-size:9px;color:var(--accent);display:flex;align-items:center;justify-content:space-between">FILTERED: ${metroFilter.toUpperCase()}<button onclick="clearMetroFilter()" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:10px">✕ CLEAR</button></div>`+list.innerHTML;
+  }
   document.getElementById('metro-ok').textContent=`✓ ${ok}/${METRO_LINES.length}`;
   document.getElementById('metro-issues').textContent=`⚠ ${issues} issues`;
 }
+function filterMetroByStatus(status){
+  metroFilter=status;renderMetroList();showToast(`Showing ${status==='good'?'operational':'affected'} lines`);
+}
+function clearMetroFilter(){metroFilter=null;renderMetroList();}
+
+function focusMetroLine(i){
+  const line=METRO_LINES[i];
+  if(mapInst)mapInst.setView(line.coords,14,{animate:true});
+  document.querySelectorAll('.metro-line').forEach((el,j)=>el.classList.toggle('selected',j===i));
+  if(document.getElementById('feed-view').style.display==='block')switchView('map');
+  openLineDetail(line.name,line.color,line);
+}
+
+function openLineDetail(name,color,line){
+  if(!line)line=METRO_LINES.find(l=>l.name===name)||{name,color,status:'unknown',detail:'–',stations:[]};
+  const sevMap={good:'<span style="color:var(--good)">● Good service</span>',warn:'<span style="color:var(--warn)">● Delays</span>',severe:'<span style="color:var(--danger)">● Suspended</span>',planned:'<span style="color:var(--accent2)">● Planned works</span>'};
+  const stationList=line.stations?.length?`<div class="detail-row"><span class="detail-key">STATIONS</span><span class="detail-val" style="font-size:10px;color:var(--text3)">${line.stations.join(' · ')}</span></div>`:'';
+  openModal(name,`
+    <div class="detail-row"><span class="detail-key">STATUS</span><span class="detail-val">${sevMap[line.status]||line.status}</span></div>
+    <div class="detail-row"><span class="detail-key">DETAIL</span><span class="detail-val">${line.detail}</span></div>
+    <div class="detail-row"><span class="detail-key">LINE</span><span class="detail-val"><span style="display:inline-block;width:12px;height:12px;border-radius:2px;background:${line.color};vertical-align:middle;margin-right:6px"></span>${line.color}</span></div>
+    ${stationList}
+    <div class="detail-row"><span class="detail-key">LAST UPDATE</span><span class="detail-val">Just now</span></div>
+    <div style="margin-top:10px;font-size:11px;color:var(--text3)">Real-time KMRC feed integration pending. Data is illustrative.</div>
+  `,'CLOSE');
+}
+
+function openMetroOverview(){
+  const rows=METRO_LINES.map(l=>{
+    const col=l.status==='good'?'var(--good)':l.status==='warn'?'var(--warn)':l.status==='severe'?'var(--danger)':'var(--accent2)';
+    return `<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)">
+      <div style="width:4px;height:20px;border-radius:2px;background:${l.color};flex-shrink:0"></div>
+      <div style="flex:1"><div style="font-size:11px;font-weight:500;color:var(--text)">${l.name}</div><div style="font-size:10px;color:var(--text3)">${l.detail}</div></div>
+      <div style="font-family:var(--mono);font-size:9px;color:${col}">● ${l.status.toUpperCase()}</div>
+    </div>`;
+  }).join('');
+  openModal('KOLKATA METRO — ALL LINES',`<div>${rows}</div><div style="margin-top:10px;font-family:var(--mono);font-size:9px;color:var(--text3)">KMRC real-time integration pending. Tap a line for details.</div>`,'CLOSE');
+}
 
 // ── WEATHER ──
-const WMO_CODE={};
 async function fetchWeather(){
-  const url=`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_gusts_10m,precipitation,cloud_cover,pressure_msl,visibility,uv_index,dew_point_2m,precipitation_probability&daily=weather_code,temperature_2m_max,temperature_2m_min&forecast_days=3&timezone=Asia%2FKolkata`;
-  const r=await fetch(url); return r.json();
+  const url=`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_gusts_10m,wind_direction_10m,precipitation,cloud_cover,pressure_msl,visibility,uv_index,dew_point_2m,precipitation_probability&daily=weather_code,temperature_2m_max,temperature_2m_min&forecast_days=3&timezone=Asia%2FKolkata`;
+  const r=await fetch(url);return r.json();
 }
 async function fetchAQ(){
   const url=`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${LAT}&longitude=${LON}&current=pm2_5,pm10,carbon_monoxide,nitrogen_dioxide,ozone,sulphur_dioxide,us_aqi&timezone=Asia%2FKolkata`;
-  const r=await fetch(url); return r.json();
+  const r=await fetch(url);return r.json();
 }
 
 function renderWeather(d,aq){
+  lastWeatherData=d;lastAQData=aq;
   const c=d.current;
-  const icon=WMO_ICON[c.weather_code]||'🌡️';
-  const desc=WMO[c.weather_code]||'–';
-  document.getElementById('w-icon').textContent=icon;
+  document.getElementById('w-icon').textContent=WMO_ICON[c.weather_code]||'🌡️';
   document.getElementById('w-temp').textContent=`${Math.round(c.temperature_2m)}°`;
-  document.getElementById('w-desc').textContent=desc;
-  document.getElementById('w-wind').textContent=`${Math.round(c.wind_speed_10m)} km/h wind`;
+  document.getElementById('w-desc').textContent=WMO[c.weather_code]||'–';
+  const deg=c.wind_direction_10m||0;
+  const dirs=['N','NE','E','SE','S','SW','W','NW'];
+  const dir=dirs[Math.round(deg/45)%8];
+  document.getElementById('w-wind').textContent=`${Math.round(c.wind_speed_10m)} km/h ${dir} wind`;
   document.getElementById('w-hum').textContent=`${c.relative_humidity_2m}%`;
   document.getElementById('w-feels').textContent=`${Math.round(c.apparent_temperature)}°C`;
-  const uv=c.uv_index;
+  const uv=c.uv_index||0;
   document.getElementById('w-uv').textContent=`${uv.toFixed(1)} ${uv<=2?'Low':uv<=5?'Mod':uv<=7?'High':'VHigh'}`;
-  if(aq&&aq.current){
+  if(aq?.current){
     const aqi=Math.round(aq.current.us_aqi);
     const col=aqi>150?'#ef4444':aqi>100?'#f97316':aqi>50?'#eab308':'#22c55e';
     document.getElementById('w-aqi').textContent=aqi;
     document.getElementById('w-aqi').style.color=col;
-    const pct=Math.max(0,100-Math.min(aqi/300*100,100));
-    document.getElementById('aqi-mini-fill').style.width=pct+'%';
+    document.getElementById('aqi-mini-fill').style.width=Math.max(0,100-Math.min(aqi/300*100,100))+'%';
     addAQMarkers(aq);
   }
 }
 
-// ── INCIDENTS (AI-generated) ──
-let incidentData=[];
+function showWeatherStat(stat){
+  const c=lastWeatherData?.current;const aq=lastAQData?.current;
+  if(!c)return;
+  const deg=c.wind_direction_10m||0;
+  const dirs=['N','NE','E','SE','S','SW','W','NW'];
+  const dir=dirs[Math.round(deg/45)%8];
+  const info={
+    humidity:{title:'HUMIDITY',body:`<b style="font-size:28px;color:var(--accent2)">${c.relative_humidity_2m}%</b><br><br>Dew point: <b>${Math.round(c.dew_point_2m||0)}°C</b><br>Cloud cover: <b>${c.cloud_cover}%</b><br><br>${c.relative_humidity_2m>80?'🔴 Muggy and uncomfortable. Reduce outdoor exertion.':c.relative_humidity_2m>60?'🟡 Moderate humidity. Stay hydrated.':'🟢 Comfortable humidity levels.'}`},
+    feels:{title:'FEELS LIKE',body:`<b style="font-size:28px;color:var(--accent)">${Math.round(c.apparent_temperature)}°C</b><br><br>Actual: <b>${Math.round(c.temperature_2m)}°C</b><br>Wind: <b>${Math.round(c.wind_speed_10m)} km/h</b><br>Humidity: <b>${c.relative_humidity_2m}%</b><br><br>Heat index adjusted for wind chill and humidity.`},
+    wind:{title:'WIND',body:`<b style="font-size:28px;color:var(--text)">${Math.round(c.wind_speed_10m)} km/h</b><br><br>Direction: <b>${dir} (${deg}°)</b><br>Gusts up to: <b>${Math.round(c.wind_gusts_10m||0)} km/h</b><br><br>${c.wind_speed_10m>50?'🔴 Strong winds. Secure loose objects.':c.wind_speed_10m>30?'🟡 Moderate gusts. Use caution outdoors.':'🟢 Light breeze. Normal conditions.'}`},
+    uv:{title:'UV INDEX',body:`<b style="font-size:28px;color:var(--warn)">${(c.uv_index||0).toFixed(1)}</b><br><br>${c.uv_index<=2?'🟢 Low risk. No protection needed.':c.uv_index<=5?'🟡 Moderate. Wear SPF 30+ after 10am.':c.uv_index<=7?'🟠 High. Cover up, hat, SPF 30+.':c.uv_index<=10?'🔴 Very high. Minimise 10am–4pm exposure.':'🟣 Extreme. Avoid outdoor exposure.'}`},
+    aqi:{title:'AIR QUALITY INDEX',body:aq?`<b style="font-size:28px;color:${aq.us_aqi>150?'var(--danger)':aq.us_aqi>100?'var(--warn)':'var(--good)'}">${Math.round(aq.us_aqi)} AQI</b><br><br>PM2.5: <b>${aq.pm2_5?.toFixed(1)||'–'} μg/m³</b><br>PM10: <b>${aq.pm10?.toFixed(1)||'–'} μg/m³</b><br>NO₂: <b>${aq.nitrogen_dioxide?.toFixed(1)||'–'} μg/m³</b><br>O₃: <b>${aq.ozone?.toFixed(1)||'–'} μg/m³</b><br>SO₂: <b>${aq.sulphur_dioxide?.toFixed(1)||'–'} μg/m³</b><br>CO: <b>${aq.carbon_monoxide?.toFixed(1)||'–'} μg/m³</b><br><br>${aq.us_aqi>150?'🔴 Unhealthy. Avoid outdoor activities.':aq.us_aqi>100?'🟠 Sensitive groups stay indoors.':aq.us_aqi>50?'🟡 Moderate. Acceptable for most people.':'🟢 Good. Air quality is satisfactory.'}`:' No AQI data.'},
+  };
+  const s=info[stat];if(s)openModal(s.title,s.body,'CLOSE');
+}
+
+function openWeatherDetail(){
+  if(!lastWeatherData)return;
+  const c=lastWeatherData.current;const d=lastWeatherData.daily;
+  openModal('WEATHER DETAIL — KOLKATA',`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+      <div class="w-stat" style="cursor:default"><div class="w-stat-label">PRESSURE</div><div class="w-stat-val">${Math.round(c.pressure_msl||0)} hPa</div></div>
+      <div class="w-stat" style="cursor:default"><div class="w-stat-label">VISIBILITY</div><div class="w-stat-val">${((c.visibility||0)/1000).toFixed(1)} km</div></div>
+      <div class="w-stat" style="cursor:default"><div class="w-stat-label">GUSTS</div><div class="w-stat-val">${Math.round(c.wind_gusts_10m||0)} km/h</div></div>
+      <div class="w-stat" style="cursor:default"><div class="w-stat-label">PRECIP</div><div class="w-stat-val">${(c.precipitation||0).toFixed(1)} mm</div></div>
+      <div class="w-stat" style="cursor:default"><div class="w-stat-label">CLOUD COVER</div><div class="w-stat-val">${c.cloud_cover||0}%</div></div>
+      <div class="w-stat" style="cursor:default"><div class="w-stat-label">PRECIP PROB</div><div class="w-stat-val">${c.precipitation_probability||0}%</div></div>
+    </div>
+    ${d?`<div style="font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.1em;margin-bottom:6px">3-DAY FORECAST</div>
+    <div style="display:flex;gap:8px">${d.weather_code.map((wc,i)=>`<div style="flex:1;background:var(--bg3);border-radius:5px;padding:8px;text-align:center"><div style="font-size:18px">${WMO_ICON[wc]||'🌡️'}</div><div style="font-size:10px;color:var(--text2);margin-top:4px">${Math.round(d.temperature_2m_max[i])}° / ${Math.round(d.temperature_2m_min[i])}°</div><div style="font-family:var(--mono);font-size:8px;color:var(--text3);margin-top:2px">${WMO[wc]||'–'}</div></div>`).join('')}</div>`:''}
+  `,'CLOSE');
+}
+
+// ── INCIDENTS ──
 async function fetchIncidents(aq,weather){
   try{
     const aqi=aq?.current?.us_aqi?Math.round(aq.current.us_aqi):95;
     const wc=weather?.current?.weather_code||0;
-    const desc=WMO[wc]||'Clear';
-    const r=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:600,
-        messages:[{role:'user',content:`Generate 3 realistic current operational incidents for Kolkata, India right now. Current conditions: weather=${desc}, AQI=${aqi}. Return ONLY a JSON array with objects: {type,severity,title,location,detail,time}. severity = "critical"|"major"|"minor". type = "traffic"|"metro"|"flood"|"air"|"event". No markdown, no preamble. Example time: "4 min ago"`}]
-      })
-    });
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',max_tokens:700,
+      messages:[{role:'user',content:`Generate 4 realistic current operational incidents for Kolkata, India right now. Current conditions: weather=${WMO[wc]||'Clear'}, AQI=${aqi}. Return ONLY a JSON array: [{type,severity,title,location,detail,time,coords}]. severity="critical"|"major"|"minor". type="traffic"|"metro"|"flood"|"air"|"event"|"power". coords=[lat,lon] near Kolkata (22.5726,88.3639). No markdown.`}]
+    })});
     const d=await r.json();
     const txt=d.content.filter(c=>c.type==='text').map(c=>c.text).join('');
     return JSON.parse(txt.replace(/```json|```/g,'').trim());
   }catch{
     return [
-      {type:'traffic',severity:'major',title:'Signal failure — Strand Road',location:'BBD Bag',detail:'Traffic backed up 2km. Police deployed.',time:'Just now'},
-      {type:'air',severity:'minor',title:'Elevated PM2.5 levels',location:'City-wide',detail:'AQI above 100. Sensitive groups advised.',time:'12 min ago'},
-      {type:'metro',severity:'minor',title:'Delays on E-W Line',location:'Sealdah–Howrah',detail:'10–15 min delays due to maintenance.',time:'28 min ago'},
+      {type:'traffic',severity:'major',title:'Signal failure — Strand Road',location:'BBD Bag',detail:'Traffic backed up 2km. Police deployed.',time:'Just now',coords:[LAT+.01,LON-.03]},
+      {type:'air',severity:'minor',title:'Elevated PM2.5 levels',location:'City-wide',detail:'AQI above 100. Sensitive groups advised.',time:'12 min ago',coords:[LAT+.01,LON+.01]},
+      {type:'metro',severity:'major',title:'Delays on E-W Line',location:'Sealdah–Howrah',detail:'10–15 min delays due to maintenance.',time:'28 min ago',coords:[LAT,LON+.03]},
+      {type:'flood',severity:'minor',title:'Waterlogging — Kasba',location:'Kasba',detail:'Minor waterlogging after overnight rain.',time:'45 min ago',coords:[LAT-.05,LON+.02]},
     ];
   }
 }
 
 function renderIncidents(items){
-  const body=document.getElementById('incidents-body');
+  lastIncidents=items;
   const criticals=items.filter(i=>i.severity==='critical');
   document.getElementById('inc-count').textContent=criticals.length?`${criticals.length} CRITICAL`:`${items.length} ACTIVE`;
-  body.innerHTML=items.map(inc=>{
-    const cls=inc.severity==='critical'?'alert':inc.severity==='major'?'warn':'';
-    return `<div class="incident-item ${cls}">
+  const body=document.getElementById('incidents-body');
+  body.innerHTML=items.map((inc,idx)=>{
+    const cls=inc.severity==='critical'?'alert':inc.severity==='major'?'warn':'info';
+    return `<div class="incident-item ${cls}" onclick="openIncidentDetail(${idx})">
       <div class="incident-title">${inc.title}</div>
       <div class="incident-meta">${inc.location} · ${inc.time}</div>
       <div style="font-size:10px;color:var(--text2);margin-top:3px">${inc.detail}</div>
     </div>`;
-  }).join('')+'<button class="show-more">SHOW ALL INCIDENTS ›</button>';
-  // Update alert count
+  }).join('')+'<button class="show-more" onclick="switchView(\'feed\')">SHOW ALL IN FEED ›</button>';
   document.getElementById('alert-count').textContent=items.length;
-  // Update feed
+  addIncidentMapMarkers();
   renderFeed(items);
+}
+
+function openIncidentDetail(idx){
+  const inc=lastIncidents[idx];if(!inc)return;
+  const sevPill=`<span class="severity-pill sev-${inc.severity}">${inc.severity.toUpperCase()}</span>`;
+  const typeIcons={traffic:'🚦',metro:'🚇',flood:'🌊',air:'💨',event:'📅',power:'⚡'};
+  openModal(`${typeIcons[inc.type]||'⚠'} ${inc.type.toUpperCase()} INCIDENT`,`
+    <div class="detail-row"><span class="detail-key">SEVERITY</span><span class="detail-val">${sevPill}</span></div>
+    <div class="detail-row"><span class="detail-key">TITLE</span><span class="detail-val">${inc.title}</span></div>
+    <div class="detail-row"><span class="detail-key">LOCATION</span><span class="detail-val">📍 ${inc.location}</span></div>
+    <div class="detail-row"><span class="detail-key">REPORTED</span><span class="detail-val">${inc.time}</span></div>
+    <div class="detail-row"><span class="detail-key">DETAIL</span><span class="detail-val">${inc.detail}</span></div>
+    ${inc.coords?`<div class="detail-row"><span class="detail-key">COORDS</span><span class="detail-val" style="font-family:var(--mono);font-size:10px">${inc.coords[0].toFixed(4)}, ${inc.coords[1].toFixed(4)}</span></div>`:''}
+  `,'CLOSE','<button class="modal-btn modal-btn-secondary" onclick="panToIncident('+idx+')">📍 SHOW ON MAP</button>');
+}
+
+function panToIncident(idx){
+  const inc=lastIncidents[idx];if(!inc)return;
+  closeModal();
+  if(inc.coords){mapInst.setView(inc.coords,15,{animate:true});}
+  switchView('map');
+  showToast(`Panned to: ${inc.location}`);
+}
+
+function toggleIncidentsPanel(){
+  incidentsPanelOpen=!incidentsPanelOpen;
+  document.getElementById('incidents-body').style.display=incidentsPanelOpen?'block':'none';
+  document.getElementById('inc-count').style.opacity=incidentsPanelOpen?'1':'.5';
 }
 
 function renderFeed(incidents){
   const feed=document.getElementById('feed-view');
   const now=new Date().toLocaleTimeString('en-IN',{timeZone:'Asia/Kolkata',hour12:false});
-  const items=incidents.map(inc=>`<div class="feed-item ${inc.severity==='critical'?'alert':inc.severity==='major'?'warn':'info'}">
-    <div class="feed-type">${inc.type.toUpperCase()} · ${inc.severity.toUpperCase()}</div>
-    <div class="feed-title">${inc.title}</div>
-    <div class="feed-detail">${inc.detail}</div>
-    <div class="feed-time">${inc.location} · ${inc.time}</div>
-  </div>`).join('');
-  feed.innerHTML=`<div style="font-family:var(--mono);font-size:9px;color:var(--text3);margin-bottom:10px;letter-spacing:.1em">LIVE FEED — ${now} IST</div>`+items;
+  feed.innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <div style="font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.1em">LIVE FEED — ${now} IST</div>
+      <button onclick="refreshAll()" style="font-family:var(--mono);font-size:9px;color:var(--accent2);background:none;border:none;cursor:pointer;letter-spacing:.06em">↺ REFRESH</button>
+    </div>`+
+    incidents.map((inc,idx)=>`<div class="feed-item ${inc.severity==='critical'?'alert':inc.severity==='major'?'warn':'info'}" onclick="openIncidentDetail(${idx})" style="cursor:pointer">
+      <div class="feed-type">${inc.type.toUpperCase()} · ${inc.severity.toUpperCase()}</div>
+      <div class="feed-title">${inc.title}</div>
+      <div class="feed-detail">${inc.detail}</div>
+      <div class="feed-time" style="display:flex;justify-content:space-between">
+        <span>📍 ${inc.location} · ${inc.time}</span>
+        <span style="color:var(--accent2);cursor:pointer" onclick="event.stopPropagation();panToIncident(${idx})">MAP ›</span>
+      </div>
+    </div>`).join('');
 }
 
 // ── NEWS ──
+let newsItems=[],newsLoading=false;
 async function fetchNews(){
   try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:800,
-        tools:[{"type":"web_search_20250305","name":"web_search"}],
-        messages:[{role:'user',content:'Search for the 6 latest news headlines from Kolkata India today. Return ONLY a JSON array with: {title,source,time,urgent}. urgent=true for breaking/critical news. Short titles only (max 40 chars). No markdown.'}]
-      })
-    });
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',max_tokens:800,
+      tools:[{"type":"web_search_20250305","name":"web_search"}],
+      messages:[{role:'user',content:'Search for the 6 latest news headlines from Kolkata India today. Return ONLY a JSON array: [{title,source,time,urgent,summary}]. urgent=true for breaking news. Titles max 45 chars. summary max 80 chars. No markdown.'}]
+    })});
     const d=await r.json();
     const txt=d.content.filter(c=>c.type==='text').map(c=>c.text).join('');
     return JSON.parse(txt.replace(/```json|```/g,'').trim());
   }catch{
     return [
-      {title:'Heavy rain forecast this week',source:'Times of India',time:'8 min ago',urgent:false},
-      {title:'Metro Line 2 sees record ridership',source:'Telegraph',time:'22 min ago',urgent:false},
-      {title:'Air quality remains poor in north KOL',source:'Anandabazar',time:'35 min ago',urgent:true},
-      {title:'Howrah Bridge traffic disruption',source:'Hindustan Times',time:'1 hr ago',urgent:true},
-      {title:'Durga Puja prep begins early',source:'ABP Live',time:'2 hr ago',urgent:false},
+      {title:'Heavy rain forecast this week',source:'Times of India',time:'8 min ago',urgent:false,summary:'IMD predicts 3–4 days of heavy rainfall across the city.'},
+      {title:'Metro Line 2 record ridership',source:'Telegraph',time:'22 min ago',urgent:false,summary:'East-West Metro sees 1.2L passengers on weekday.'},
+      {title:'Air quality remains poor in north',source:'Anandabazar',time:'35 min ago',urgent:true,summary:'PM2.5 levels above safe limits in Dum Dum area.'},
+      {title:'Howrah Bridge traffic disruption',source:'Hindustan Times',time:'1 hr ago',urgent:true,summary:'Lane closures due to repair work until Thursday.'},
+      {title:'Durga Puja prep begins early',source:'ABP Live',time:'2 hr ago',urgent:false,summary:'Pandal construction underway in 200+ neighbourhoods.'},
     ];
   }
 }
 
 function renderNews(items){
-  const body=document.getElementById('news-body');
-  body.innerHTML=items.map(n=>`<div class="news-item">
+  newsItems=items;
+  document.getElementById('news-body').innerHTML=items.map((n,i)=>`<div class="news-item" onclick="openNewsDetail(${i})">
     <div class="news-icon${n.urgent?'':' info'}">${n.urgent?'⊙ BREAKING':'○'}</div>
     <div class="news-title">${n.title}</div>
     <div class="news-time">${n.source} · ${n.time}</div>
   </div>`).join('');
+}
+
+async function refreshNews(){
+  if(newsLoading)return;
+  newsLoading=true;
+  const btn=document.getElementById('news-refresh-btn');
+  btn.classList.add('spinning');
+  showToast('Refreshing news…');
+  const news=await fetchNews();
+  renderNews(news);
+  btn.classList.remove('spinning');
+  newsLoading=false;
+  showToast('News updated');
+}
+
+function openNewsDetail(i){
+  const n=newsItems[i];if(!n)return;
+  openModal(n.urgent?'⊙ BREAKING NEWS':'📰 NEWS',`
+    <div style="font-size:14px;color:var(--text);font-weight:500;margin-bottom:10px;line-height:1.5">${n.title}</div>
+    ${n.summary?`<div style="font-size:12px;color:var(--text2);margin-bottom:10px;line-height:1.6;padding:8px 10px;background:var(--bg3);border-radius:4px;border-left:2px solid var(--accent2)">${n.summary}</div>`:''}
+    <div style="font-family:var(--mono);font-size:10px;color:var(--text3)">${n.source} · ${n.time}</div>
+    <div style="margin-top:12px;font-size:11px;color:var(--text2)">Full article available at <b>${n.source}</b>.</div>
+  `,'CLOSE');
 }
 
 // ── CLOCK ──
@@ -647,41 +916,283 @@ function tick(){
   const now=new Date();
   const ist=new Date(now.toLocaleString('en-US',{timeZone:'Asia/Kolkata'}));
   const p=n=>String(n).padStart(2,'0');
-  document.getElementById('clock').textContent=`${p(ist.getHours())}:${p(ist.getMinutes())}:${p(ist.getSeconds())}`;
+  let h=ist.getHours(),ampm='';
+  if(!clock24h){ampm=h>=12?' PM':' AM';h=h%12||12;}
+  document.getElementById('clock').textContent=`${p(h)}:${p(ist.getMinutes())}:${p(ist.getSeconds())}${ampm}`;
 }
+function toggleClockFormat(){clock24h=!clock24h;showToast(clock24h?'24-hour format':'12-hour format');}
 setInterval(tick,1000);tick();
 
 // ── FILTERS ──
 function toggleFilter(id){
-  const el=document.getElementById('f-'+id);
+  const el=document.getElementById('f-'+id);if(!el)return;
   el.classList.toggle('active');
+  if(activeFilters.has(id))activeFilters.delete(id);else activeFilters.add(id);
+  if(id==='temp'&&lastWeatherData)addWeatherMarkers(lastWeatherData);
+  if(id==='aq'&&lastAQData)addAQMarkers(lastAQData);
+  if(id==='metro')addMetroMarkers();
+  if(id==='traffic')addTrafficMarkers();
+  if(id==='floods')addFloodMarkers();
+  if(id==='incidents')addIncidentMapMarkers();
+  if(id==='weather'&&lastWeatherData)addWeatherMarkers(lastWeatherData);
+  showToast(`${activeFilters.has(id)?'Showing':'Hidden'}: ${id}`);
 }
+
+// ── LAYER BUTTONS ──
+function toggleLayersPanel(e){
+  e.stopPropagation();
+  const panel=document.getElementById('layers-panel');
+  const btn=document.getElementById('more-layers-btn');
+  panel.classList.toggle('open');
+  btn.classList.toggle('active',panel.classList.contains('open'));
+}
+function toggleLayerBtn(id){
+  const btn=document.getElementById('lt-'+id);if(!btn)return;
+  btn.classList.toggle('on');btn.classList.toggle('off');
+  if(extraLayers.has(id))extraLayers.delete(id);else extraLayers.add(id);
+  if(id==='traffic')addTrafficMarkers();
+  if(id==='flood')addFloodMarkers();
+  if(id==='hosp')addHospitalMarkers();
+  if(id==='fire')addFireMarkers();
+  if(id==='power')addPowerMarkers();
+  showToast(`${extraLayers.has(id)?'Showing':'Hidden'}: ${id==='hosp'?'Hospitals':id==='fire'?'Fire Stations':id==='power'?'Power Grid':id}`);
+}
+document.addEventListener('click',e=>{
+  const panel=document.getElementById('layers-panel');
+  const sw=document.getElementById('search-wrap');
+  if(!e.target.closest('#layers-panel')&&!e.target.closest('#more-layers-btn'))panel.classList.remove('open');
+  if(!e.target.closest('#search-wrap')&&!e.target.closest('#search-btn'))sw.classList.remove('open');
+});
 
 // ── VIEW SWITCH ──
 function switchView(v){
-  const mapWrap=document.getElementById('map-wrap');
-  const feedView=document.getElementById('feed-view');
-  const btnMap=document.getElementById('btn-map');
-  const btnFeed=document.getElementById('btn-feed');
-  if(v==='map'){mapWrap.style.display='block';feedView.style.display='none';btnMap.classList.add('active');btnFeed.classList.remove('active');}
-  else{mapWrap.style.display='none';feedView.style.display='block';btnFeed.classList.add('active');btnMap.classList.remove('active');}
+  const mw=document.getElementById('map-wrap'),fv=document.getElementById('feed-view');
+  const bm=document.getElementById('btn-map'),bf=document.getElementById('btn-feed');
+  if(v==='map'){mw.style.display='block';fv.style.display='none';bm.classList.add('active');bf.classList.remove('active');setTimeout(()=>mapInst.invalidateSize(),50);}
+  else{mw.style.display='none';fv.style.display='block';bf.classList.add('active');bm.classList.remove('active');}
+}
+
+// ── THEME ──
+let isDark=true;
+function toggleTheme(){
+  isDark=!isDark;
+  document.body.classList.toggle('light-mode',!isDark);
+  document.getElementById('theme-btn').textContent=isDark?'☀ THEME':'🌙 THEME';
+  document.querySelector('.leaflet-container').style.background=isDark?'#0a0d12':'#f0f4f8';
+  mapInst.eachLayer(l=>{if(l._url)mapInst.removeLayer(l);});
+  L.tileLayer(isDark?'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png':'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{maxZoom:19}).addTo(mapInst);
+  showToast(isDark?'Dark mode':'Light mode');
+}
+
+// ── FULLSCREEN ──
+function toggleFullscreen(){
+  if(!document.fullscreenElement){
+    document.documentElement.requestFullscreen().catch(()=>{});
+    document.getElementById('fs-btn').textContent='⤡';
+  }else{
+    document.exitFullscreen();
+    document.getElementById('fs-btn').textContent='⤢';
+  }
+}
+document.addEventListener('fullscreenchange',()=>{
+  document.getElementById('fs-btn').textContent=document.fullscreenElement?'⤡':'⤢';
+  setTimeout(()=>mapInst.invalidateSize(),100);
+});
+
+// ── SEARCH ──
+let searchTimeout=null;
+function toggleSearch(){
+  const wrap=document.getElementById('search-wrap');
+  wrap.classList.toggle('open');
+  if(wrap.classList.contains('open'))setTimeout(()=>document.getElementById('search-input').focus(),100);
+}
+function doSearch(q){
+  clearTimeout(searchTimeout);
+  const res=document.getElementById('search-results');
+  if(!q.trim()){res.innerHTML='';return;}
+  searchTimeout=setTimeout(()=>{
+    const matches=SEARCHABLE.filter(s=>s.name.toLowerCase().includes(q.toLowerCase()));
+    if(!matches.length){res.innerHTML='<div class="search-result-item" style="color:var(--text3)">No results</div>';return;}
+    res.innerHTML=matches.slice(0,6).map((s,i)=>`<div class="search-result-item" onclick="goToSearch(${i},'${q}')">
+      <span style="color:var(--text3);font-size:9px">${s.type.toUpperCase()} · </span>${s.name}
+    </div>`).join('');
+    // Store for click
+    res._matches=matches;
+  },150);
+}
+function goToSearch(i,q){
+  const matches=SEARCHABLE.filter(s=>s.name.toLowerCase().includes(q.toLowerCase()));
+  const s=matches[i];if(!s)return;
+  mapInst.setView([s.lat,s.lon],15,{animate:true});
+  document.getElementById('search-wrap').classList.remove('open');
+  document.getElementById('search-input').value='';
+  document.getElementById('search-results').innerHTML='';
+  showToast(`Navigated to: ${s.name}`);
+  switchView('map');
+}
+function handleSearchKey(e){
+  if(e.key==='Escape'){document.getElementById('search-wrap').classList.remove('open');}
+}
+
+// ── MODAL ──
+function openModal(title,body,closeLbl,extraBtn){
+  document.getElementById('modal-title-text').textContent=title;
+  document.getElementById('modal-body-content').innerHTML=body;
+  document.getElementById('modal-footer').innerHTML=`<button class="modal-btn modal-btn-primary" onclick="closeModal()">${closeLbl||'CLOSE'}</button>${extraBtn||''}`;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal(){document.getElementById('modal-overlay').classList.remove('open');}
+function closeModalOnBg(e){if(e.target===document.getElementById('modal-overlay'))closeModal();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();document.getElementById('search-wrap').classList.remove('open');}});
+
+// ── SIGN IN ──
+function openSignIn(){
+  if(isSignedIn){
+    openModal('YOUR ACCOUNT',`
+      <div style="text-align:center;padding:8px 0">
+        <div style="font-size:32px;margin-bottom:8px">👤</div>
+        <div style="font-size:14px;color:var(--text);font-weight:600;margin-bottom:4px">${signedInName}</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text3)">SIGNED IN · Kolkata Operations</div>
+        <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div class="w-stat" style="cursor:default"><div class="w-stat-label">ROLE</div><div style="font-size:11px;color:var(--accent)">OPERATOR</div></div>
+          <div class="w-stat" style="cursor:default"><div class="w-stat-label">SESSION</div><div style="font-size:11px">Active</div></div>
+        </div>
+      </div>
+    `,'CLOSE','<button class="modal-btn modal-btn-secondary" onclick="signOut()">SIGN OUT</button>');
+    return;
+  }
+  document.getElementById('modal-title-text').textContent='SIGN IN';
+  document.getElementById('modal-body-content').innerHTML=`
+    <label class="signin-label">EMAIL</label>
+    <input class="signin-input" type="email" id="si-email" placeholder="operator@ksm.gov.in" onkeydown="if(event.key==='Enter')doSignIn()">
+    <label class="signin-label">PASSWORD</label>
+    <input class="signin-input" type="password" id="si-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doSignIn()">
+    <div style="font-size:11px;color:var(--text3);margin-top:4px">Demo mode — any credentials accepted.</div>
+  `;
+  document.getElementById('modal-footer').innerHTML=`<button class="modal-btn modal-btn-primary" onclick="doSignIn()">SIGN IN</button><button class="modal-btn modal-btn-secondary" onclick="closeModal()">CANCEL</button>`;
+  document.getElementById('modal-overlay').classList.add('open');
+  setTimeout(()=>document.getElementById('si-email')?.focus(),100);
+}
+function doSignIn(){
+  const email=document.getElementById('si-email')?.value||'operator@ksm.gov.in';
+  signedInName=(email.split('@')[0]||'operator').replace(/[^a-zA-Z0-9]/g,' ').toUpperCase().slice(0,12);
+  isSignedIn=true;
+  const btn=document.getElementById('signin-btn');
+  btn.textContent=`👤 ${signedInName.slice(0,8)}`;
+  btn.style.color='var(--accent)';btn.style.borderColor='var(--accent)';
+  closeModal();showToast(`Welcome, ${signedInName}`);
+}
+function signOut(){
+  isSignedIn=false;signedInName='Operator';
+  const btn=document.getElementById('signin-btn');
+  btn.textContent='SIGN IN';btn.style.color='var(--accent)';btn.style.borderColor='var(--accent)';
+  closeModal();showToast('Signed out');
+}
+
+// ── ABOUT ──
+function openAboutModal(){
+  openModal('KOLKATA SITUATION MONITOR',`
+    <div style="font-size:12px;color:var(--text2);line-height:1.8">
+      <b style="color:var(--accent)">KSM v2.0</b> — Real-time operational dashboard for Kolkata.<br><br>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
+        <div class="w-stat" style="cursor:default"><div class="w-stat-label">WEATHER</div><div style="font-size:10px;color:var(--text2)">Open-Meteo API</div></div>
+        <div class="w-stat" style="cursor:default"><div class="w-stat-label">AIR QUALITY</div><div style="font-size:10px;color:var(--text2)">Open-Meteo AQ</div></div>
+        <div class="w-stat" style="cursor:default"><div class="w-stat-label">INCIDENTS</div><div style="font-size:10px;color:var(--text2)">Claude AI</div></div>
+        <div class="w-stat" style="cursor:default"><div class="w-stat-label">NEWS</div><div style="font-size:10px;color:var(--text2)">Claude + Web Search</div></div>
+        <div class="w-stat" style="cursor:default"><div class="w-stat-label">MAP</div><div style="font-size:10px;color:var(--text2)">Leaflet + CartoDB</div></div>
+        <div class="w-stat" style="cursor:default"><div class="w-stat-label">METRO</div><div style="font-size:10px;color:var(--text2)">Illustrative data</div></div>
+      </div>
+      Data refreshes every 5 minutes. Click the clock to toggle 12/24h format.
+    </div>
+  `,'CLOSE');
+}
+
+// ── SYSTEM STATUS ──
+function openSystemStatus(){
+  const statuses=[
+    {name:'Weather API',status:'ok'},{name:'Air Quality API',status:'ok'},
+    {name:'Claude AI',status:'ok'},{name:'Map Tiles',status:'ok'},
+    {name:'KMRC Metro Feed',status:'pending'},{name:'KMC Flood Data',status:'pending'},
+  ];
+  const rows=statuses.map(s=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)">
+    <span style="font-size:12px">${s.name}</span>
+    <span style="font-family:var(--mono);font-size:10px;color:${s.status==='ok'?'var(--good)':s.status==='warn'?'var(--warn)':'var(--text3)'}">● ${s.status==='ok'?'LIVE':s.status==='warn'?'DEGRADED':'PENDING'}</span>
+  </div>`).join('');
+  openModal('SYSTEM STATUS',`
+    <div style="margin-bottom:10px">${rows}</div>
+    <div style="font-family:var(--mono);font-size:9px;color:var(--text3)">Last checked: just now · Auto-refresh: 5 min</div>
+  `,'CLOSE');
+}
+
+// ── EXPORT ──
+function exportReport(){
+  if(!lastWeatherData){showToast('No data to export yet');return;}
+  const c=lastWeatherData.current;
+  const aq=lastAQData?.current;
+  const now=new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'});
+  const lines=[
+    '# KOLKATA SITUATION MONITOR — STATUS REPORT',
+    `Generated: ${now} IST`,
+    '',
+    '## WEATHER',
+    `Temperature: ${Math.round(c.temperature_2m)}°C (Feels: ${Math.round(c.apparent_temperature)}°C)`,
+    `Condition: ${WMO[c.weather_code]||'–'}`,
+    `Wind: ${Math.round(c.wind_speed_10m)} km/h | Humidity: ${c.relative_humidity_2m}% | UV: ${c.uv_index?.toFixed(1)}`,
+    aq?`AQI (US): ${Math.round(aq.us_aqi)} | PM2.5: ${aq.pm2_5?.toFixed(1)} μg/m³ | PM10: ${aq.pm10?.toFixed(1)} μg/m³`:'AQI: unavailable',
+    '',
+    '## METRO STATUS',
+    ...METRO_LINES.map(l=>`${l.name}: ${l.status.toUpperCase()} — ${l.detail}`),
+    '',
+    '## ACTIVE INCIDENTS',
+    ...lastIncidents.map(i=>`[${i.severity.toUpperCase()}] ${i.title} @ ${i.location} — ${i.detail} (${i.time})`),
+    '',
+    '## NEWS HEADLINES',
+    ...newsItems.map(n=>`${n.urgent?'[BREAKING] ':''}${n.title} — ${n.source} (${n.time})`),
+  ];
+  const blob=new Blob([lines.join('\n')],{type:'text/plain'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`KSM_Report_${new Date().toISOString().slice(0,10)}.txt`;
+  a.click();
+  showToast('Report exported');
+}
+
+// ── TOAST ──
+let toastTimer=null;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2200);
 }
 
 // ── REFRESH ──
-let refreshInterval;
 async function refreshAll(){
+  const btn=document.getElementById('refresh-btn');
+  btn.textContent='↺ LOADING';btn.style.color='var(--warn)';
   document.getElementById('conn-status').textContent='UPDATING';
+  document.querySelector('.conn-dot').style.background='var(--warn)';
   try{
     const [w,aq]=await Promise.all([fetchWeather(),fetchAQ()]);
     renderWeather(w,aq);
     addWeatherMarkers(w);
+    addTrafficMarkers();
+    addFloodMarkers();
+    if(extraLayers.has('hosp'))addHospitalMarkers();
+    if(extraLayers.has('fire'))addFireMarkers();
+    if(extraLayers.has('power'))addPowerMarkers();
     const incs=await fetchIncidents(aq,w);
     renderIncidents(incs);
     document.getElementById('conn-status').textContent='CONNECTED';
+    document.querySelector('.conn-dot').style.background='var(--accent2)';
     document.getElementById('updated').textContent='Updated just now';
-    setTimeout(()=>{document.getElementById('updated').textContent='Updated less than a minute ago';},30000);
+    btn.textContent='↺ REFRESH';btn.style.color='';
+    setTimeout(()=>document.getElementById('updated').textContent='Updated less than a minute ago',30000);
   }catch(e){
     document.getElementById('conn-status').textContent='ERROR';
+    document.querySelector('.conn-dot').style.background='var(--danger)';
+    btn.textContent='↺ RETRY';btn.style.color='var(--danger)';
+    showToast('⚠ Refresh failed — check connection');
     console.error(e);
   }
 }
@@ -694,76 +1205,15 @@ async function init(){
   await refreshAll();
   const news=await fetchNews();
   renderNews(news);
-  // Hide loading
   setTimeout(()=>{
     const l=document.getElementById('loading');
-    l.style.transition='opacity .5s';
-    l.style.opacity='0';
+    l.style.transition='opacity .5s';l.style.opacity='0';
     setTimeout(()=>l.remove(),500);
   },800);
-  // Auto-refresh every 5 min
-  refreshInterval=setInterval(refreshAll,5*60*1000);
-  // News refresh every 10 min
-  setInterval(async()=>{const n=await fetchNews();renderNews(n);},10*60*1000);
+  setInterval(refreshAll,5*60*1000);
+  setInterval(refreshNews,10*60*1000);
 }
-
-function toggleTheme(){}// placeholder
-
 window.addEventListener('DOMContentLoaded',init);
 </script>
-
-<script>
-// --- Functional button patch ---
-window.activeFilters = new Set(['incidents','metro','aq','temp']);
-
-function toggleTheme(){
-  document.body.classList.toggle('light-mode');
-}
-
-function toggleFilter(id){
-  const el=document.getElementById('f-'+id);
-  if(el) el.classList.toggle('active');
-
-  if(activeFilters.has(id)) activeFilters.delete(id);
-  else activeFilters.add(id);
-
-  if(id==='temp'){
-    weatherMarkers.forEach(m=>{
-      if(mapInst.hasLayer(m) && !activeFilters.has('temp')) mapInst.removeLayer(m);
-      else if(!mapInst.hasLayer(m) && activeFilters.has('temp')) m.addTo(mapInst);
-    });
-  }
-
-  if(id==='aq'){
-    aqMarkers.forEach(m=>{
-      if(mapInst.hasLayer(m) && !activeFilters.has('aq')) mapInst.removeLayer(m);
-      else if(!mapInst.hasLayer(m) && activeFilters.has('aq')) m.addTo(mapInst);
-    });
-  }
-
-  if(id==='metro'){
-    metroMarkers.forEach(m=>{
-      if(mapInst.hasLayer(m) && !activeFilters.has('metro')) mapInst.removeLayer(m);
-      else if(!mapInst.hasLayer(m) && activeFilters.has('metro')) m.addTo(mapInst);
-    });
-  }
-}
-
-document.addEventListener('click',e=>{
-  if(e.target.closest('.metro-line')){
-    mapInst.setView([22.5726,88.3639],14,{animate:true});
-  }
-
-  if(e.target.closest('.show-more')){
-    switchView('feed');
-  }
-
-  if(e.target.closest('.more-btn')){
-    alert('Additional layers can be connected here.');
-  }
-});
-</script>
-
-<script src="KSM_V3_CommandCenter.js"></script>
 </body>
 </html>
