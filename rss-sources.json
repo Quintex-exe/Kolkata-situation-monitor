@@ -1,0 +1,48 @@
+{
+  "kolkata": [
+    {
+      "name": "Google News Kolkata",
+      "url": "https://news.google.com/rss/search?q=Kolkata"
+    },
+    {
+      "name": "Google News West Bengal",
+      "url": "https://news.google.com/rss/search?q=West+Bengal"
+    }
+  ],
+
+  "india": [
+    {
+      "name": "The Hindu",
+      "url": "https://www.thehindu.com/news/national/feeder/default.rss"
+    },
+    {
+      "name": "Indian Express",
+      "url": "https://indianexpress.com/section/india/feed/"
+    }
+  ],
+
+  "world": [
+    {
+      "name": "BBC World",
+      "url": "https://feeds.bbci.co.uk/news/world/rss.xml"
+    },
+    {
+      "name": "Reuters World",
+      "url": "https://feeds.reuters.com/Reuters/worldNews"
+    }
+  ],
+
+  "weather": [
+    {
+      "name": "IMD Alerts",
+      "url": "https://mausam.imd.gov.in/"
+    }
+  ],
+
+  "transport": [
+    {
+      "name": "Metro Updates",
+      "url": "https://mtp.indianrailways.gov.in/"
+    }
+  ]
+}
